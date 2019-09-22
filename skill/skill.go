@@ -48,7 +48,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 0.0\n"
-  "      y: -22.0\n"
+  "      y: 0.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -81,7 +81,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "label"
+  id: "description-label"
   type: "label"
   data: "size {\n"
   "  x: 2000.0\n"
@@ -117,14 +117,68 @@ embedded_components {
   "tracking: 0.0\n"
   "pivot: PIVOT_CENTER\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
-  "line_break: false\n"
-  "text: \"Joker only\"\n"
+  "line_break: true\n"
+  "text: \"Description\"\n"
   "font: \"/skill/skill_font.font\"\n"
   "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {
     x: 0.0
     y: -978.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "requirements-label"
+  type: "label"
+  data: "size {\n"
+  "  x: 960.0\n"
+  "  y: 1430.0\n"
+  "  z: 0.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "scale {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "outline {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "shadow {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "leading: 1.0\n"
+  "tracking: 0.0\n"
+  "pivot: PIVOT_CENTER\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  "line_break: true\n"
+  "text: \"Requirements\"\n"
+  "font: \"/skill/skill_font.font\"\n"
+  "material: \"/builtins/fonts/label.material\"\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
     z: 0.0
   }
   rotation {

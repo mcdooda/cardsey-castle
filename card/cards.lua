@@ -6,9 +6,10 @@ local diamonds = hash("diamonds")
 local clover = hash("clover")
 local pikes = hash("pikes")
 
-local jack = hash("jack")
-local queen = hash("queen")
-local king = hash("king")
+local jack = 11
+local queen = 12
+local king = 13
+
 local joker = hash("joker")
 
 local cards = {
@@ -63,11 +64,12 @@ local function add_suit(suit)
 	local faces = {"Jack", "Queen", "King"}
 	for i = 1, #faces do
 		local face = faces[i]
+		local value = 10 + i
 		local card_str = get_card_string(suit, face)
 		cards[hash(card_str)] = {
 			color = color_hash,
 			suit = suit_hash,
-			value = hash(face),
+			value = value,
 			string = card_str,
 			name = face .. " of " .. suit
 		}
@@ -78,8 +80,6 @@ add_suit("Hearts")
 add_suit("Diamonds")
 add_suit("Clover")
 add_suit("Pikes")
-
---pprint(cards)
 
 cards.red = red
 cards.black = black
@@ -92,10 +92,60 @@ cards.pikes = pikes
 cards.get_card_string = get_card_string
 cards.get_card_hash = get_card_hash
 
-local function is_joker(card_hash)
-	return cards[card_hash].value == joker
+-- value
+function cards.get_value(card_name)
+	return cards[card_name].value
 end
 
-cards.is_joker = is_joker
+function cards.is_joker(card_name)
+	return cards.get_value(card_name) == joker
+end
+
+function cards.is_jack(card_name)
+	return cards.get_value(card_name) == jack
+end
+
+function cards.is_queen(card_name)
+	return cards.get_value(card_name) == queen
+end
+
+function cards.is_king(card_name)
+	return cards.get_value(card_name) == king
+end
+
+function cards.is_number(card_name)
+	local value = cards.get_value(card_name)
+	return value ~= joker and 1 <= value and value <= 10
+end
+
+function cards.is_face(card_name)
+	local value = cards.get_value(card_name)
+	return value ~= joker and jack <= value and value <= king
+end
+
+function cards.is_ace(card_name)
+	return cards.get_value(card_name) == 1
+end
+
+-- suit
+function cards.is_suit(card_name, suit)
+	return cards[card_name].suit == suit
+end
+
+function cards.is_hearts(card_name)
+	return cards.is_suit(card_name, hearts)
+end
+
+function cards.is_diamonds(card_name)
+	return cards.is_suit(card_name, diamonds)
+end
+
+function cards.is_clover(card_name)
+	return cards.is_suit(card_name, clover)
+end
+
+function cards.is_pikes(card_name)
+	return cards.is_suit(card_name, pikes)
+end
 
 return cards
