@@ -1,0 +1,52 @@
+local cards_z_min = 0.5
+local cards_z_max = 1
+
+function init(self)
+	self.cards = {}
+end
+
+local function get_z(object)
+	return go.get_position(object).z
+end
+
+local function set_z(object, z)
+	local position = go.get_position(object)
+	position.z = z
+	go.set_position(position, object)
+end
+
+local function find_card_index(cards, card)
+	assert(card)
+	for i = 1, #cards do
+		if cards[i] == card then
+			return i
+		end
+	end
+	assert(false, "could not find card", card)
+end
+
+local function bring_to_front(cards, card)
+	local card_index = find_card_index(cards, card)
+	if #cards == 1 then
+		assert(cards[1] == card)
+		set_z(card, cards_z_min)
+	else
+		table.remove(cards, card_index)
+		cards[#cards + 1] = card
+		local space_between_cards = (cards_z_max - cards_z_min) / (#cards - 1)
+		for i = 1, #cards do
+			local card_z = (i - 1) * space_between_cards + cards_z_min
+			set_z(cards[i], card_z)
+		end
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("add_card") then
+		local card_id = message.card_id
+		self.cards[#self.cards + 1] = card_id
+		bring_to_front(self.cards, card_id)
+	elseif message_id == hash("bring_to_front") then
+		bring_to_front(self.cards, message.card_id)
+	end
+end

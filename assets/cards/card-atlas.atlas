@@ -1,0 +1,24 @@
+images {
+  image: "/assets/cards/back.png"
+}
+images {
+  image: "/assets/cards/black-joker.png"
+}
+images {
+  image: "/assets/cards/red-joker.png"
+}
+images {
+  image: "/assets/cards/clover-king.png"
+}
+images {
+  image: "/assets/cards/diamonds-2.png"
+}
+images {
+  image: "/assets/cards/hearts-jack.png"
+}
+images {
+  image: "/assets/cards/pikes-1.png"
+}
+margin: 0
+extrude_borders: 2
+inner_padding: 0

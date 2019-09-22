@@ -1,0 +1,70 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.moved = false
+	self.card = nil
+	self.card_relative_position = nil
+end
+
+function update(self)
+	if self.card and self.moved then
+		local position = go.get_position()
+		local new_card_position = vmath.vector3()
+		new_card_position.x = position.x + self.card_relative_position.x
+		new_card_position.y = position.y + self.card_relative_position.y
+		new_card_position.z = go.get_position(self.card).z
+		go.set_position(new_card_position, self.card)
+	end
+	if self.card then
+		msg.post("/hand", "bring_to_front", { card_id = msg.url(self.card) })
+	end
+end
+
+local function get_z(object)
+	return go.get_position(object).z
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") and message.enter then
+		if not self.moved and not self.card or get_z(message.other_id) > get_z(self.card) then
+			self.card = message.other_id
+			local position = go.get_position()
+			local card_position = go.get_position(self.card)
+			self.card_relative_position = {
+				x = card_position.x - position.x,
+				y = card_position.y - position.y
+			}
+			msg.post(".", "bring_card_to_front")
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") then
+		if action.pressed then
+			go.set_position(vmath.vector3(action.x, action.y, 0))
+			msg.post(".", "enable")
+			self.moved = false
+		elseif action.released then
+			msg.post(".", "disable")
+			if self.card then
+				if not self.moved then
+					msg.post(self.card, "click")
+				else
+					msg.post(self.card, "drop")
+				end
+				self.card = nil
+				self.card_relative_position = nil
+			end
+		else
+			local already_moved = self.moved
+			local position = go.get_position()
+			if (position.x ~= action.x or position.y ~= action.y) and self.card then
+				self.moved = true
+			end
+			go.set_position(vmath.vector3(action.x, action.y, 0))
+			if not already_moved and self.moved and self.card then
+				msg.post(self.card, "drag")
+			end
+		end
+	end
+end

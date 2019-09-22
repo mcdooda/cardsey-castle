@@ -1,0 +1,100 @@
+local cards = require("card.cards")
+
+go.property("card_name", hash("red-joker"))
+go.property("showing_front", false)
+
+local turn_animation_duration = 0.4
+
+function init(self)
+	msg.post("/hand", "add_card", { card_id = msg.url(".") })
+	self.initial_scale = go.get_scale()
+	self.animating = false
+	self.showing_front = false
+	self.skill = nil
+	self.card_name_string = cards[self.card_name].string
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("click") then
+		if not self.showing_front then
+			msg.post(".", "turn")
+		end
+	elseif message_id == hash("entered_skill") then
+		self.skill = message.skill_id
+	elseif message_id == hash("left_skill") then
+		self.skill = nil
+	elseif message_id == hash("drop") then
+		if self.skill then
+			local skill_position = go.get_position(self.skill)
+			local card_position = go.get_position()
+			local position = vmath.vector3()
+			position.x = skill_position.x
+			position.y = skill_position.y
+			position.z = card_position.z
+			local skill = self.skill
+			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_OUTQUINT, 0.3, 0, function()
+				go.set_parent(msg.url("."), self.skill, true)
+				msg.post(skill, "execute_skill", { card_id = msg.url(".") })
+			end)
+		end
+	end
+	
+	if self.animating then
+		return
+	end
+	if message_id == hash("turn") then
+		if self.showing_front then
+			msg.post(".", "show_back")
+		else
+			msg.post(".", "show_front")
+		end
+	elseif message_id == hash("show_front") then
+		self.animating = true
+		go.animate(".", "scale", go.PLAYBACK_ONCE_FORWARD, self.initial_scale * 1.2, go.EASING_INSINE, turn_animation_duration * 0.5)
+		go.animate("#sprite", "scale.x", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INSINE, turn_animation_duration * 0.5, 0, function()
+			sprite.play_flipbook("#sprite", self.card_name_string)
+			self.showing_front = true
+			go.animate(".", "scale", go.PLAYBACK_ONCE_FORWARD, self.initial_scale, go.EASING_OUTSINE, turn_animation_duration * 0.5)
+			go.animate("#sprite", "scale.x", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_OUTSINE, turn_animation_duration * 0.5, 0, function()
+				self.animating = false
+			end)
+		end)
+	elseif message_id == hash("show_back") then
+		self.animating = true
+		go.animate("#sprite", "scale.x", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INSINE, turn_animation_duration * 0.5, 0, function()
+			sprite.play_flipbook("#sprite", "back")
+			self.showing_front = false
+			go.animate("#sprite", "scale.x", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_OUTSINE, turn_animation_duration * 0.5, 0, function()
+				self.animating = false
+			end)
+		end)
+	end
+end
+
+function on_input(self, action_id, action)
+	if not action_id then
+		self.pressed = false
+		-- todo drag
+	elseif action_id == hash("touch") and action.pressed then
+		self.pressed = true
+	elseif action_id == hash("touch") and action.released then
+		if self.pressed then
+			msg.post(".", "turn")
+		end
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end
