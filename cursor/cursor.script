@@ -58,7 +58,9 @@ function on_input(self, action_id, action)
 		else
 			local already_moved = self.moved
 			local position = go.get_position()
-			if (position.x ~= action.x or position.y ~= action.y) and self.card then
+			local diff_x = position.x - action.x
+			local diff_y = position.y - action.y
+			if math.sqrt(diff_x * diff_x + diff_y * diff_y) >= 5 and self.card then
 				self.moved = true
 			end
 			go.set_position(vmath.vector3(action.x, action.y, 0))

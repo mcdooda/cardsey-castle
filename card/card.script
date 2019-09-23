@@ -33,6 +33,8 @@ function on_message(self, message_id, message, sender)
 		self.skill = message.skill_id
 	elseif message_id == hash("left_skill") then
 		self.skill = nil
+	elseif message_id == hash("drag") then
+		msg.post("#cards-collision", "disable")
 	elseif message_id == hash("drop") then
 		if self.skill then
 			local skill_position = go.get_position(self.skill)
@@ -42,10 +44,13 @@ function on_message(self, message_id, message, sender)
 			position.y = skill_position.y
 			position.z = card_position.z
 			local skill = self.skill
+			go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTQUINT, 0.3)
 			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_OUTQUINT, 0.3, 0, function()
 				go.set_parent(msg.url("."), self.skill, true)
 				msg.post(skill, "execute_skill", { card_id = msg.url(".") })
 			end)
+		else
+			msg.post("#cards-collision", "enable")
 		end
 	end
 	
