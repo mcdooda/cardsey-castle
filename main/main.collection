@@ -1,81 +1,5 @@
 name: "main"
 instances {
-  id: "card"
-  prototype: "/card/card.go"
-  position {
-    x: 70.0
-    y: 139.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.13
-    y: 0.13
-    z: 1.0
-  }
-}
-instances {
-  id: "card1"
-  prototype: "/card/card.go"
-  position {
-    x: 170.0
-    y: 139.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "card"
-    properties {
-      id: "card_name"
-      value: "pikes-1"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.13
-    y: 0.13
-    z: 1.0
-  }
-}
-instances {
-  id: "card2"
-  prototype: "/card/card.go"
-  position {
-    x: 270.0
-    y: 139.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "card"
-    properties {
-      id: "card_name"
-      value: "hearts-jack"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.13
-    y: 0.13
-    z: 1.0
-  }
-}
-instances {
   id: "cursor"
   prototype: "/cursor/cursor.go"
   position {
@@ -112,62 +36,6 @@ instances {
   scale3 {
     x: 1.0
     y: 1.0
-    z: 1.0
-  }
-}
-instances {
-  id: "card3"
-  prototype: "/card/card.go"
-  position {
-    x: 370.0
-    y: 139.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "card"
-    properties {
-      id: "card_name"
-      value: "diamonds-2"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.13
-    y: 0.13
-    z: 1.0
-  }
-}
-instances {
-  id: "card4"
-  prototype: "/card/card.go"
-  position {
-    x: 470.0
-    y: 139.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "card"
-    properties {
-      id: "card_name"
-      value: "clover-king"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.13
-    y: 0.13
     z: 1.0
   }
 }
@@ -276,34 +144,6 @@ instances {
   }
 }
 instances {
-  id: "card5"
-  prototype: "/card/card.go"
-  position {
-    x: 570.0
-    y: 139.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "card"
-    properties {
-      id: "card_name"
-      value: "black-joker"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.13
-    y: 0.13
-    z: 1.0
-  }
-}
-instances {
   id: "skill4"
   prototype: "/skill/skill.go"
   position {
@@ -376,6 +216,26 @@ instances {
   scale3 {
     x: 1.0
     y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "deck"
+  prototype: "/deck/deck.go"
+  position {
+    x: 675.0
+    y: 378.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.13
+    y: 0.13
     z: 1.0
   }
 }

@@ -1,6 +1,10 @@
 key_trigger {
-  input: KEY_SPACE
+  input: KEY_P
   action: "toggle_physics_debug"
+}
+key_trigger {
+  input: KEY_SPACE
+  action: "draw"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_1

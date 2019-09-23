@@ -5,8 +5,8 @@ local skill = {}
 skill.description = "Test skill 3"
 skill.requirements = "Face down cards only"
 
-function skill:can_play_card(card_name, showing_front)
-	return not showing_front
+function skill:can_play_card(card_name)
+	return not card_name
 end
 
 function skill:execute(skill_script_component, card_name, showing_front)

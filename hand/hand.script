@@ -1,3 +1,5 @@
+go.property("size", 0)
+
 local cards_z_min = 0.5
 local cards_z_max = 1
 
@@ -45,7 +47,17 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("add_card") then
 		local card_id = message.card_id
 		self.cards[#self.cards + 1] = card_id
+		self.size = self.size + 1
 		bring_to_front(self.cards, card_id)
+	elseif message_id == hash("remove_card") then
+		for i = 1, #self.cards do
+			local card = self.cards[i]
+			if card == message.card_id then
+				table.remove(self.cards, i)
+				break
+			end
+		end
+		self.size = self.size - 1
 	elseif message_id == hash("bring_to_front") then
 		bring_to_front(self.cards, message.card_id)
 	end

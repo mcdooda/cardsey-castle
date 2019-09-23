@@ -1,0 +1,53 @@
+local cards = require("card.cards")
+
+function init(self)
+	self.stack = cards.init_stack()
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("draw") then
+		if #self.stack == 0 then
+			return
+		end
+		if go.get(msg.url(nil, "/hand", "hand"), "size") >= 6 then
+			return
+		end
+		local top_card_name = self.stack[#self.stack]
+		self.stack[#self.stack] = nil
+		local position = go.get_position()
+		local rotation = go.get_rotation()
+		local scale = go.get_scale()
+		local properties = { card_name = top_card_name }
+		local card = factory.create("#card-factory", position, rotation, properties, scale)
+		msg.post(msg.url(nil, card, "collisionobject"), "disable")
+		msg.post(msg.url(nil, card, "cards-collision"), "disable")
+		local card_destination_position = vmath.vector3()
+		card_destination_position.x = position.x - 120
+		card_destination_position.y = position.y - 220
+		card_destination_position.z = position.z
+		go.animate(msg.url(nil, card, nil), "position", go.PLAYBACK_ONCE_FORWARD, card_destination_position, go.EASING_INOUTCUBIC, 0.4, 0, function()
+			msg.post(msg.url(nil, card, "collisionobject"), "enable")
+			msg.post(msg.url(nil, card, "cards-collision"), "enable")
+		end)
+	end
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end

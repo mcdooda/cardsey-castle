@@ -25,15 +25,19 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") and message.enter then
-		if not self.moved and not self.card or get_z(message.other_id) > get_z(self.card) then
-			self.card = message.other_id
-			local position = go.get_position()
-			local card_position = go.get_position(self.card)
-			self.card_relative_position = {
-				x = card_position.x - position.x,
-				y = card_position.y - position.y
-			}
-			msg.post(".", "bring_card_to_front")
+		if message.other_group == hash("card") then
+			if not self.moved and not self.card or get_z(message.other_id) > get_z(self.card) then
+				self.card = message.other_id
+				local position = go.get_position()
+				local card_position = go.get_position(self.card)
+				self.card_relative_position = {
+					x = card_position.x - position.x,
+					y = card_position.y - position.y
+				}
+				msg.post(".", "bring_card_to_front")
+			end
+		elseif message.other_group == hash("deck") then
+			msg.post("/deck", "draw")
 		end
 	end
 end

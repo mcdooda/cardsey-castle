@@ -12,7 +12,7 @@ local king = 13
 
 local joker = hash("joker")
 
-local cards = {
+local all_cards = {
 	[hash("red-joker")] = {
 		color = red,
 		value = joker,
@@ -52,7 +52,7 @@ local function add_suit(suit)
 	
 	for i = 1, 10 do
 		local card_str = get_card_string(suit, i)
-		cards[hash(card_str)] = {
+		all_cards[hash(card_str)] = {
 			color = color_hash,
 			suit = suit_hash,
 			value = i,
@@ -66,7 +66,7 @@ local function add_suit(suit)
 		local face = faces[i]
 		local value = 10 + i
 		local card_str = get_card_string(suit, face)
-		cards[hash(card_str)] = {
+		all_cards[hash(card_str)] = {
 			color = color_hash,
 			suit = suit_hash,
 			value = value,
@@ -81,6 +81,8 @@ add_suit("Diamonds")
 add_suit("Clover")
 add_suit("Pikes")
 
+local cards = {}
+
 cards.red = red
 cards.black = black
 
@@ -92,9 +94,15 @@ cards.pikes = pikes
 cards.get_card_string = get_card_string
 cards.get_card_hash = get_card_hash
 
+cards.all_cards = all_cards
+
+function cards.get_string(card_name)
+	return all_cards[card_name].string
+end
+
 -- value
 function cards.get_value(card_name)
-	return cards[card_name].value
+	return all_cards[card_name].value
 end
 
 function cards.is_joker(card_name)
@@ -129,7 +137,7 @@ end
 
 -- suit
 function cards.is_suit(card_name, suit)
-	return cards[card_name].suit == suit
+	return all_cards[card_name].suit == suit
 end
 
 function cards.is_hearts(card_name)
@@ -146,6 +154,21 @@ end
 
 function cards.is_pikes(card_name)
 	return cards.is_suit(card_name, pikes)
+end
+
+-- stack
+function cards.init_stack()
+	local stack = {}
+	local card_names = {}
+	for card_name in pairs(all_cards) do
+		card_names[#card_names + 1] = card_name
+	end
+	while #card_names > 0 do
+		local random_index = math.random(1, #card_names)
+		stack[#stack + 1] = card_names[random_index]
+		table.remove(card_names, random_index)
+	end
+	return stack
 end
 
 return cards

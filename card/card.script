@@ -11,7 +11,7 @@ function init(self)
 	self.animating = false
 	self.showing_front = false
 	self.skill = nil
-	self.card_name_string = cards[self.card_name].string
+	self.card_name_string = cards.get_string(self.card_name)
 end
 
 function final(self)

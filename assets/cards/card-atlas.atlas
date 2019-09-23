@@ -19,6 +19,150 @@ images {
 images {
   image: "/assets/cards/pikes-1.png"
 }
+images {
+  image: "/assets/cards/pikes-2.png"
+}
+images {
+  image: "/assets/cards/pikes-3.png"
+}
+images {
+  image: "/assets/cards/pikes-4.png"
+}
+images {
+  image: "/assets/cards/pikes-5.png"
+}
+images {
+  image: "/assets/cards/pikes-6.png"
+}
+images {
+  image: "/assets/cards/pikes-7.png"
+}
+images {
+  image: "/assets/cards/pikes-8.png"
+}
+images {
+  image: "/assets/cards/pikes-9.png"
+}
+images {
+  image: "/assets/cards/pikes-10.png"
+}
+images {
+  image: "/assets/cards/pikes-jack.png"
+}
+images {
+  image: "/assets/cards/pikes-king.png"
+}
+images {
+  image: "/assets/cards/pikes-queen.png"
+}
+images {
+  image: "/assets/cards/diamonds-1.png"
+}
+images {
+  image: "/assets/cards/diamonds-3.png"
+}
+images {
+  image: "/assets/cards/diamonds-4.png"
+}
+images {
+  image: "/assets/cards/diamonds-5.png"
+}
+images {
+  image: "/assets/cards/diamonds-6.png"
+}
+images {
+  image: "/assets/cards/diamonds-7.png"
+}
+images {
+  image: "/assets/cards/diamonds-8.png"
+}
+images {
+  image: "/assets/cards/diamonds-9.png"
+}
+images {
+  image: "/assets/cards/diamonds-10.png"
+}
+images {
+  image: "/assets/cards/diamonds-jack.png"
+}
+images {
+  image: "/assets/cards/diamonds-king.png"
+}
+images {
+  image: "/assets/cards/diamonds-queen.png"
+}
+images {
+  image: "/assets/cards/clover-1.png"
+}
+images {
+  image: "/assets/cards/clover-2.png"
+}
+images {
+  image: "/assets/cards/clover-3.png"
+}
+images {
+  image: "/assets/cards/clover-4.png"
+}
+images {
+  image: "/assets/cards/clover-5.png"
+}
+images {
+  image: "/assets/cards/clover-6.png"
+}
+images {
+  image: "/assets/cards/clover-7.png"
+}
+images {
+  image: "/assets/cards/clover-8.png"
+}
+images {
+  image: "/assets/cards/clover-9.png"
+}
+images {
+  image: "/assets/cards/clover-10.png"
+}
+images {
+  image: "/assets/cards/clover-jack.png"
+}
+images {
+  image: "/assets/cards/clover-queen.png"
+}
+images {
+  image: "/assets/cards/hearts-1.png"
+}
+images {
+  image: "/assets/cards/hearts-2.png"
+}
+images {
+  image: "/assets/cards/hearts-3.png"
+}
+images {
+  image: "/assets/cards/hearts-4.png"
+}
+images {
+  image: "/assets/cards/hearts-5.png"
+}
+images {
+  image: "/assets/cards/hearts-6.png"
+}
+images {
+  image: "/assets/cards/hearts-7.png"
+}
+images {
+  image: "/assets/cards/hearts-8.png"
+}
+images {
+  image: "/assets/cards/hearts-9.png"
+}
+images {
+  image: "/assets/cards/hearts-10.png"
+}
+images {
+  image: "/assets/cards/hearts-king.png"
+}
+images {
+  image: "/assets/cards/hearts-queen.png"
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0

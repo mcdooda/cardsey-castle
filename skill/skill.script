@@ -10,9 +10,12 @@ end
 
 local function can_play_card(self, card)
 	local card_script_url = msg.url(nil, card, "card")
-	local card_name = go.get(card_script_url, "card_name")
+	local card_name
 	local showing_front = go.get(card_script_url, "showing_front")
-	return self.skill:can_play_card(card_name, showing_front)
+	if showing_front then
+		card_name = go.get(card_script_url, "card_name")
+	end
+	return self.skill:can_play_card(card_name)
 end
 
 local function execute_skill(self, card)
@@ -46,8 +49,11 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("execute_skill") then
 		local card = message.card_id
+		msg.post(msg.url(nil, card.path, "collisionobject"), "disable")
+		msg.post(msg.url(nil, card.path, "cards-collision"), "disable")
 		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, go.get_position().z + 1600, go.EASING_INBACK, 0.4, 0, function()
 			execute_skill(self, card)
+			msg.post("/hand", "remove_card", { card_id = card })
 		end)
 	end
 end
