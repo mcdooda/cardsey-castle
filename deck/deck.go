@@ -60,8 +60,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 512.0\n"
-  "  data: 745.0\n"
+  "  data: 66.5\n"
+  "  data: 96.5\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -108,7 +108,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -30.0
+    y: -10.0
     z: -0.01
   }
   rotation {
@@ -128,7 +128,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -60.0
+    y: -20.0
     z: -0.02
   }
   rotation {
@@ -148,7 +148,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -90.0
+    y: -30.0
     z: -0.03
   }
   rotation {
@@ -168,7 +168,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -120.0
+    y: -40.0
     z: -0.04
   }
   rotation {
