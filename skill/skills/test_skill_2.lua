@@ -10,7 +10,6 @@ function skill:can_play_card(card_name)
 end
 
 function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url, skill_id)
-	print("Executing test skill 2:", self, skill_script_component, card_name, showing_front, skill)
 	msg.post(card_player_url, "reload_used_skill", { ignore_skill = skill_id })
 end
 
