@@ -57,6 +57,7 @@ function on_message(self, message_id, message, sender)
 				break
 			end
 		end
+		go.delete(message.card_id)
 		self.size = self.size - 1
 	elseif message_id == hash("bring_to_front") then
 		bring_to_front(self.cards, message.card_id)

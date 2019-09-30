@@ -1,13 +1,13 @@
 local characters = require("character.characters")
 
 go.property("name", hash("Player"))
-go.property("player", true)
+go.property("is_player", true)
 go.property("health_points", 1)
 go.property("max_health_points", 1)
 
 local function set_health_points(self, health_points, animate)
 	self.health_points = health_points
-	msg.post("main-gui", "set_health", { player = self.player, animate = animate, ratio = health_points / self.max_health_points })
+	msg.post("main-gui", "set_health", { is_player = self.is_player, animate = animate, value = health_points, max_value = self.max_health_points })
 end
 
 function init(self)

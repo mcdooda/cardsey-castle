@@ -301,7 +301,7 @@ instances {
       type: PROPERTY_TYPE_HASH
     }
     properties {
-      id: "player"
+      id: "is_player"
       value: "false"
       type: PROPERTY_TYPE_BOOLEAN
     }
