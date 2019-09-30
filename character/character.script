@@ -1,0 +1,49 @@
+local characters = require("character.characters")
+
+go.property("name", hash("Player"))
+go.property("player", true)
+go.property("health_points", 1)
+go.property("max_health_points", 1)
+
+local function set_health_points(self, health_points, animate)
+	self.health_points = health_points
+	msg.post("main-gui", "set_health", { player = self.player, animate = animate, ratio = health_points / self.max_health_points })
+end
+
+function init(self)
+	local character = assert(characters[self.name])
+	self.name = character.name
+	self.max_health_points = character.health_points
+	set_health_points(self, character.health_points, false)
+	self.skills = {}
+end
+
+local function reload_used_skill(self, ignore_skill)
+	local used_skills = {}
+	for i = 1, #self.skills do
+		local skill = self.skills[i]
+		if skill ~= ignore_skill and go.get(skill, "used") then
+			used_skills[#used_skills + 1] = skill
+		end
+	end
+	if #used_skills > 0 then
+		local random_index = math.random(1, #used_skills)
+		msg.post(used_skills[random_index], "reload_skill")
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("add_skill") then
+		self.skills[#self.skills + 1] = message.skill_id
+	elseif message_id == hash("reload_used_skill") then
+		reload_used_skill(self, message.ignore_skill)
+	elseif message_id == hash("deal_damage") then
+		local new_health_points = math.max(self.health_points - message.amount, 0)
+		set_health_points(self, new_health_points, true)
+	elseif message_id == hash("heal") then
+		local new_health_points = math.min(self.health_points + message.amount, self.max_health_points)
+		set_health_points(self, new_health_points, true)
+	elseif message_id == hash("set_health_points") then
+		set_health_points(self, message.health_points, true)
+	end
+end

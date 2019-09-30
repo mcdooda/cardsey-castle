@@ -1,0 +1,35 @@
+local function get_character_node(player, path)
+	if player then
+		return gui.get_node("healthbar-player/" .. path)
+	else
+		return gui.get_node("healthbar-enemy/" .. path)
+	end
+end
+
+local function set_health(self, player, ratio, animate)
+	local red = get_character_node(player, "healthbar-red")
+	local green = get_character_node(player, "healthbar-green")
+	local green_size = vmath.vector3(gui.get_size(red))
+	green_size.x = green_size.x * ratio
+	if animate then
+		gui.animate(green, "size", green_size, gui.EASING_OUTQUINT, 0.3)
+		gui.animate(red, "rotation.z", 3, gui.EASING_LINEAR, 0.04, 0, function()
+			gui.animate(red, "rotation.z", -3, gui.EASING_LINEAR, 0.08, 0, function()
+				gui.animate(red, "rotation.z", 0, gui.EASING_LINEAR, 0.04)
+			end)
+		end)
+		gui.animate(green, "rotation.z", 2, gui.EASING_LINEAR, 0.04, 0, function()
+			gui.animate(green, "rotation.z", -2, gui.EASING_LINEAR, 0.08, 0, function()
+				gui.animate(green, "rotation.z", 0, gui.EASING_LINEAR, 0.04)
+			end)
+		end)
+	else
+		gui.set_size(green, green_size)
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_health") then
+		set_health(self, message.player, message.ratio, message.animate)
+	end
+end

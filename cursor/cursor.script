@@ -37,7 +37,9 @@ function on_message(self, message_id, message, sender)
 				msg.post(".", "bring_card_to_front")
 			end
 		elseif message.other_group == hash("deck") then
-			msg.post("/deck", "draw")
+			if go.get("/hand#hand", "size") < 6 then
+				msg.post("/deck", "draw", { amount = 1 })
+			end
 		end
 	end
 end

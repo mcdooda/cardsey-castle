@@ -156,6 +156,19 @@ function cards.is_pikes(card_name)
 	return cards.is_suit(card_name, pikes)
 end
 
+-- color
+function cards.get_color(card_name)
+	return all_cards[card_name].color
+end
+
+function cards.is_red(card_name)
+	return cards.get_color(card_name) == red
+end
+
+function cards.is_black(card_name)
+	return cards.get_color(card_name) == black
+end
+
 -- stack
 function cards.init_stack()
 	local stack = {}
