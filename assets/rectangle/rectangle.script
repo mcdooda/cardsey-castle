@@ -1,0 +1,13 @@
+go.property("color", vmath.vector4(0.4, 0.74, 1.0, 0))
+
+function init(self)
+	go.set("#sprite", "color", self.color)
+	local scale = go.get_scale()
+	go.set("#sprite", "shader_scale", vmath.vector4(scale.x, scale.y, 0, 0))
+	self.time = vmath.vector4(0, 0, 0, 0)
+end
+
+function update(self, dt)
+	self.time.x = self.time.x + dt
+	go.set("#sprite", "time", self.time)
+end

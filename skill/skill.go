@@ -14,26 +14,6 @@ components {
   }
 }
 embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "tile_set: \"/assets/skills/skills-atlas.atlas\"\n"
-  "default_animation: \"skill\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: 0.0
-    y: -194.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
   id: "collisionobject"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
@@ -60,8 +40,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 250.0\n"
-  "  data: 250.0\n"
+  "  data: 66.5\n"
+  "  data: 97.0\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -84,8 +64,8 @@ embedded_components {
   id: "description-label"
   type: "label"
   data: "size {\n"
-  "  x: 2000.0\n"
-  "  y: 400.0\n"
+  "  x: 240.0\n"
+  "  y: 40.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -96,9 +76,9 @@ embedded_components {
   "  w: 0.0\n"
   "}\n"
   "color {\n"
-  "  x: 1.0\n"
-  "  y: 1.0\n"
-  "  z: 1.0\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
   "  w: 1.0\n"
   "}\n"
   "outline {\n"
@@ -119,12 +99,12 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: true\n"
   "text: \"Description\"\n"
-  "font: \"/skill/skill_font.font\"\n"
+  "font: \"/builtins/fonts/system_font.font\"\n"
   "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {
     x: 0.0
-    y: -978.0
+    y: -116.0
     z: 0.0
   }
   rotation {
@@ -138,8 +118,8 @@ embedded_components {
   id: "requirements-label"
   type: "label"
   data: "size {\n"
-  "  x: 960.0\n"
-  "  y: 1430.0\n"
+  "  x: 120.0\n"
+  "  y: 194.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -173,8 +153,28 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: true\n"
   "text: \"Requirements\"\n"
-  "font: \"/skill/skill_font.font\"\n"
+  "font: \"/builtins/fonts/system_font.font\"\n"
   "material: \"/builtins/fonts/label.material\"\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "tile_set: \"/assets/cards/card-atlas.atlas\"\n"
+  "default_animation: \"back\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
     x: 0.0

@@ -40,166 +40,6 @@ instances {
   }
 }
 instances {
-  id: "skill"
-  prototype: "/skill/skill.go"
-  position {
-    x: 170.0
-    y: 910.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.135
-    y: 0.11
-    z: 1.0
-  }
-}
-instances {
-  id: "skill1"
-  prototype: "/skill/skill.go"
-  position {
-    x: 470.0
-    y: 910.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "skill"
-    properties {
-      id: "skill_name"
-      value: "test_skill_2"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.135
-    y: 0.11
-    z: 1.0
-  }
-}
-instances {
-  id: "skill2"
-  prototype: "/skill/skill.go"
-  position {
-    x: 170.0
-    y: 660.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "skill"
-    properties {
-      id: "skill_name"
-      value: "test_skill_3"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.135
-    y: 0.11
-    z: 1.0
-  }
-}
-instances {
-  id: "skill3"
-  prototype: "/skill/skill.go"
-  position {
-    x: 470.0
-    y: 660.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "skill"
-    properties {
-      id: "skill_name"
-      value: "test_skill_4"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.135
-    y: 0.11
-    z: 1.0
-  }
-}
-instances {
-  id: "skill4"
-  prototype: "/skill/skill.go"
-  position {
-    x: 170.0
-    y: 410.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "skill"
-    properties {
-      id: "skill_name"
-      value: "test_skill_5"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.135
-    y: 0.11
-    z: 1.0
-  }
-}
-instances {
-  id: "skill5"
-  prototype: "/skill/skill.go"
-  position {
-    x: 470.0
-    y: 410.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "skill"
-    properties {
-      id: "skill_name"
-      value: "test_skill_6"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-  scale3 {
-    x: 0.135
-    y: 0.11
-    z: 1.0
-  }
-}
-instances {
   id: "screen_bounds"
   prototype: "/main/screen_bounds.go"
   position {
@@ -225,7 +65,7 @@ instances {
   position {
     x: 676.0
     y: 365.0
-    z: 0.0
+    z: 0.3
   }
   rotation {
     x: 0.0
@@ -312,6 +152,209 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "background"
+  prototype: "/assets/rectangle/rectangle.go"
+  position {
+    x: 320.0
+    y: 568.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "rectangle"
+    properties {
+      id: "color"
+      value: "0.8, 0.75, 0.71, 0.0"
+      type: PROPERTY_TYPE_VECTOR4
+    }
+  }
+  scale3 {
+    x: 640.0
+    y: 1136.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "skill-collection-2"
+  collection: "/skill/skill-collection.collection"
+  position {
+    x: 450.0
+    y: 925.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "skill"
+    properties {
+      id: "skill"
+      properties {
+        id: "skill_name"
+        value: "test_skill_2"
+        type: PROPERTY_TYPE_HASH
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "skill-collection-1"
+  collection: "/skill/skill-collection.collection"
+  position {
+    x: 190.0
+    y: 925.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "skill-collection-3"
+  collection: "/skill/skill-collection.collection"
+  position {
+    x: 190.0
+    y: 665.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "skill"
+    properties {
+      id: "skill"
+      properties {
+        id: "skill_name"
+        value: "test_skill_3"
+        type: PROPERTY_TYPE_HASH
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "skill-collection-4"
+  collection: "/skill/skill-collection.collection"
+  position {
+    x: 450.0
+    y: 665.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "skill"
+    properties {
+      id: "skill"
+      properties {
+        id: "skill_name"
+        value: "test_skill_4"
+        type: PROPERTY_TYPE_HASH
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "skill-collection-5"
+  collection: "/skill/skill-collection.collection"
+  position {
+    x: 190.0
+    y: 405.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "skill"
+    properties {
+      id: "skill"
+      properties {
+        id: "skill_name"
+        value: "test_skill_5"
+        type: PROPERTY_TYPE_HASH
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "skill-collection-6"
+  collection: "/skill/skill-collection.collection"
+  position {
+    x: 450.0
+    y: 405.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "skill"
+    properties {
+      id: "skill"
+      properties {
+        id: "skill_name"
+        value: "test_skill_6"
+        type: PROPERTY_TYPE_HASH
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "go"
@@ -322,26 +365,6 @@ embedded_instances {
   "    x: 0.0\n"
   "    y: 0.0\n"
   "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"background\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/main/main.atlas\\\"\\n"
-  "default_animation: \\\"background\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
-  "\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: -1.0\n"
   "  }\n"
   "  rotation {\n"
   "    x: 0.0\n"

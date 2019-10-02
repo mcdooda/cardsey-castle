@@ -1,6 +1,6 @@
 go.property("skill_name", hash("test_skill_1"))
-go.property("card_player", msg.url("character-player"))
-go.property("opponent", msg.url("character-enemy"))
+go.property("card_player", msg.url("/character-player"))
+go.property("opponent", msg.url("/character-enemy"))
 go.property("used", false)
 
 local skills = require("skill.skills")
@@ -11,6 +11,8 @@ function init(self)
 	label.set_text("#description-label", self.skill.description)
 	msg.post(self.card_player, "add_skill", { skill_id = msg.url("#") })
 	self.initial_y = go.get_position().y
+
+	go.set_parent("skill-background", msg.url("."), true)
 end
 
 local function can_play_card(self, card)
