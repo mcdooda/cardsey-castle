@@ -1,7 +1,3 @@
-function init(self)
-	self.health_points = 0
-end
-
 local function get_character_node(is_player, path)
 	if is_player then
 		return gui.get_node("healthbar-player/" .. path)
@@ -10,7 +6,7 @@ local function get_character_node(is_player, path)
 	end
 end
 
-local function set_health(self, is_player, value, max_value, animate)
+local function set_health(self, is_player, initial_value, value, max_value, animate)
 	local red = get_character_node(is_player, "healthbar-red")
 	local green = get_character_node(is_player, "healthbar-green")
 	local text = get_character_node(is_player, "healthbar-text")
@@ -36,14 +32,12 @@ local function set_health(self, is_player, value, max_value, animate)
 			if total_time_elapsed > animation_duration then
 				timer.cancel(handle)
 				gui.set_text(text, tostring(value) .. " / " .. tostring(max_value))
-				self.health_points = value
 			else
-				local current_value = math.floor(value + (self.health_points - value) * (1 - total_time_elapsed / animation_duration))
+				local current_value = math.floor(value + (initial_value - value) * (1 - total_time_elapsed / animation_duration))
 				gui.set_text(text, tostring(current_value) .. " / " .. tostring(max_value))
 			end
 		end)
 	else
-		self.health_points = value
 		gui.set_text(text, tostring(value) .. " / " .. tostring(max_value))
 		gui.set_size(green, green_size)
 	end
@@ -51,6 +45,6 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("set_health") then
-		set_health(self, message.is_player, message.value, message.max_value, message.animate)
+		set_health(self, message.is_player, message.initial_value, message.value, message.max_value, message.animate)
 	end
 end
