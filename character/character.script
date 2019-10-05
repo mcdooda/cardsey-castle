@@ -130,6 +130,20 @@ local function set_health_points(self, health_points, animate)
 	msg.post("/main-gui", "set_health", { is_player = self.is_player, animate = animate, initial_value = self.health_points, value = health_points, max_value = self.max_health_points })
 end
 
+local function destroy_faceup_card(self)
+	local faceup_cards = {}
+	for i = 1, #self.cards do
+		local card_url = self.cards[i]
+		if go.get(msg.url(nil, card_url.path, "card"), "showing_front") then
+			faceup_cards[#faceup_cards + 1] = card_url
+		end
+	end
+	if #faceup_cards > 0 then
+		local random_faceup_card_index = math.random(1, #faceup_cards)
+		remove_card(self, faceup_cards[random_faceup_card_index])
+	end
+end
+
 function init(self)
 	local character = assert(characters[self.name])
 	self.character = character
@@ -169,16 +183,22 @@ local function find_card_index(cards, card)
 end
 
 function on_message(self, message_id, message, sender)
+	-- turns
 	if message_id == hash("start_turn") then
 		start_turn(self)
 	elseif message_id == hash("end_turn") then
 		end_turn(self)
+	-- ai
 	elseif message_id == hash("play_ai_turn") then
 		if not self.is_player then
-			if not ai.play(self) then
+			local skill_card_combination = ai.find_best_move(self)
+			if skill_card_combination then
+				ai.play_skill(skill_card_combination.skill_id, skill_card_combination.card_id)
+			else
 				msg.post(".", "end_turn")
 			end
 		end
+	-- skills
 	elseif message_id == hash("reload_used_skill") then
 		reload_used_skill(self, message.ignore_skill_id)
 	elseif message_id == hash("deal_damage") then
@@ -189,6 +209,9 @@ function on_message(self, message_id, message, sender)
 		set_health_points(self, new_health_points, true)
 	elseif message_id == hash("set_health_points") then
 		set_health_points(self, message.health_points, true)
+	elseif message_id == hash("destroy_faceup_card") then
+		destroy_faceup_card(self)
+	-- cards in hand
 	elseif message_id == hash("add_card") then
 		add_card(self, message.card_id)
 	elseif message_id == hash("remove_card") then

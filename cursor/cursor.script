@@ -27,14 +27,17 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") and message.enter then
 		if message.other_group == hash("card") then
 			if not self.moved and not self.card or get_z(message.other_id) > get_z(self.card) then
-				self.card = message.other_id
-				local position = go.get_position()
-				local card_position = go.get_position(self.card)
-				self.card_relative_position = {
-					x = card_position.x - position.x,
-					y = card_position.y - position.y
-				}
-				msg.post(".", "bring_card_to_front")
+				local clicked_card = message.other_id
+				local card_character = go.get(msg.url(nil, clicked_card, "card"), "character")
+					if go.get(msg.url(nil, card_character.path, "character"), "is_player") then
+					self.card = message.other_id
+					local position = go.get_position()
+					local card_position = go.get_position(self.card)
+					self.card_relative_position = {
+						x = card_position.x - position.x,
+						y = card_position.y - position.y
+					}
+				end
 			end
 		elseif message.other_group == hash("deck") and go.get(msg.url(nil, message.other_id, "deck"), "is_player_deck") then
 			if go.get("/player/character#character", "cards_count") < 6 then

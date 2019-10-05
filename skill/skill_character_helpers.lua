@@ -27,14 +27,15 @@ local function reload_used_skill(character_url, ignore_skill_id)
 end
 
 local function destroy_faceup_card(character_url)
-	print("TODO")
+	msg.post(get_character_script_url(character_url), "destroy_faceup_card")
 end
 
 return {
-	get_health_points = get_health_points,
-	set_health_points = set_health_points,
-	deal_damage       = deal_damage,
-	heal              = heal,
-	draw              = draw,
-	reload_used_skill = reload_used_skill
+	get_health_points   = get_health_points,
+	set_health_points   = set_health_points,
+	deal_damage         = deal_damage,
+	heal                = heal,
+	draw                = draw,
+	reload_used_skill   = reload_used_skill,
+	destroy_faceup_card = destroy_faceup_card
 }
