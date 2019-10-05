@@ -59,4 +59,9 @@ shared_state = 1
 [physics]
 gravity_y = 0.0
 scale = 0.01
+max_contacts = 256
+max_collisions = 256
+
+[sprite]
+max_count = 200
 

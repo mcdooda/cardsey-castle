@@ -6,5 +6,6 @@ skills[hash("test_skill_3")] = require("skill.skills.test_skill_3")
 skills[hash("test_skill_4")] = require("skill.skills.test_skill_4")
 skills[hash("test_skill_5")] = require("skill.skills.test_skill_5")
 skills[hash("test_skill_6")] = require("skill.skills.test_skill_6")
+skills[hash("test_skill_7")] = require("skill.skills.test_skill_7")
 
 return skills

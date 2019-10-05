@@ -26,6 +26,10 @@ local function reload_used_skill(character_url, ignore_skill_id)
 	msg.post(get_character_script_url(character_url), "reload_used_skill", { ignore_skill_id = ignore_skill_id })
 end
 
+local function destroy_faceup_card(character_url)
+	print("TODO")
+end
+
 return {
 	get_health_points = get_health_points,
 	set_health_points = set_health_points,

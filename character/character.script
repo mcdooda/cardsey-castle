@@ -1,4 +1,5 @@
 local characters = require("character.characters")
+local ai = require("character.ai")
 
 go.property("name", hash("Player"))
 go.property("is_player", true)
@@ -51,7 +52,15 @@ local function start_turn(self)
 		local skill_position = go.get_position("/skill-position-" .. tostring(i))
 		add_skill(self, skill_name, skill_position)
 	end
-	msg.post("deck", "draw", { amount = 6, show_front = true })
+	local hand_size = go.get("hand#hand", "size")
+	local draw_amount = 6 - hand_size
+	if draw_amount < 1 then
+		draw_amount = 1
+	end
+	msg.post("deck", "draw", { amount = draw_amount, show_front = true })
+	timer.delay(3, false, function()
+		msg.post(".", "play_ai_turn")
+	end)
 end
 
 local function end_turn(self)
@@ -99,6 +108,12 @@ function on_message(self, message_id, message, sender)
 		start_turn(self)
 	elseif message_id == hash("end_turn") then
 		end_turn(self)
+	elseif message_id == hash("play_ai_turn") then
+		if not self.is_player then
+			if not ai.play(self) then
+				msg.post(".", "end_turn")
+			end
+		end
 	elseif message_id == hash("reload_used_skill") then
 		reload_used_skill(self, message.ignore_skill_id)
 	elseif message_id == hash("deal_damage") then
