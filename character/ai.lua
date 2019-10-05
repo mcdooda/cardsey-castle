@@ -1,6 +1,9 @@
 local cards = require("card.cards")
 local skills = require("skill.skills")
 
+local draw = hash("draw")
+local flip_random_card = hash("flip_random_card")
+
 local function get_unused_skills(self)
 	local unused_skills = {}
 	for i = 1, #self.skills do
@@ -18,6 +21,8 @@ local function find_best_move(self)
 
 	local cards = self.cards
 	local cards_count = #self.cards
+
+	local has_facedown_cards = false
 	
 	local skill_card_matches = {}
 	for i = 1, unused_skills_count do
@@ -29,6 +34,8 @@ local function find_best_move(self)
 			local card_name
 			if go.get(card_id, "showing_front") then
 				card_name = go.get(card_id, "card_name")
+			else
+				has_facedown_cards = true
 			end
 			if skill:can_play_card(card_name) then
 				skill_card_matches[#skill_card_matches + 1] = {
@@ -40,7 +47,13 @@ local function find_best_move(self)
 	end
 
 	if #skill_card_matches == 0 then
-		return
+		if self.can_draw then
+			return draw
+		elseif has_facedown_cards and #unused_skills > 0 then
+			return flip_random_card
+		else
+			return
+		end
 	end
 
 	local random_combination_index = math.random(1, #skill_card_matches)
@@ -60,6 +73,11 @@ local function play_skill(skill_id, card_id)
 end
 
 return {
+	-- special actions
+	draw             = draw,
+	flip_random_card = flip_random_card,
+
+	-- functions
 	find_best_move = find_best_move,
 	play_skill     = play_skill
 }

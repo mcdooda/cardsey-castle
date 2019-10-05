@@ -18,8 +18,12 @@ add_character("Player", 20, {
 	hash("test_skill_6")
 })
 add_character("Enemy", 20, {
+	hash("test_skill_7"),
+	hash("test_skill_2"),
+	hash("test_skill_3"),
 	hash("test_skill_4"),
-	hash("test_skill_7")
+	hash("test_skill_5"),
+	hash("test_skill_6")
 })
 
 return characters

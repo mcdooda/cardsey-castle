@@ -8,8 +8,10 @@ go.property("is_player", true)
 go.property("health_points", 1)
 go.property("max_health_points", 1)
 go.property("cards_count", 0)
+go.property("can_draw", true)
 
 -- cards in hand
+local max_card_draw = 6
 local cards_z_min = 0.5
 local cards_z_max = 1
 
@@ -50,9 +52,24 @@ local function bring_to_front(cards, card)
 	end
 end
 
+local function flip_random_card(cards)
+	local facedown_cards = {}
+	for i = 1, #cards do
+		local card_url = cards[i]
+		if not go.get(msg.url(nil, card_url.path, "card"), "showing_front") then
+			facedown_cards[#facedown_cards + 1] = card_url
+		end
+	end
+	if #facedown_cards > 0 then
+		local random_facedown_card_index = math.random(1, #facedown_cards)
+		msg.post(facedown_cards[random_facedown_card_index], "show_front")
+	end
+end
+
 local function add_card(self, card_id)
 	self.cards[#self.cards + 1] = card_id
 	self.cards_count = self.cards_count + 1
+	self.can_draw = self.cards_count < max_card_draw
 	bring_to_front(self.cards, card_id)
 end
 
@@ -61,6 +78,7 @@ local function remove_card(self, card_id)
 	table.remove(self.cards, card_index)
 	go.delete(card_id)
 	self.cards_count = self.cards_count - 1
+	self.can_draw = self.cards_count < max_card_draw
 end
 
 local function get_character_url(is_player)
@@ -103,14 +121,18 @@ local function start_turn(self)
 		local skill_position = go.get_position("/skill-position-" .. tostring(i))
 		add_skill(self, skill_name, skill_position)
 	end
-	local draw_amount = 6 - self.cards_count
+	local draw_amount = max_card_draw - self.cards_count
 	if draw_amount < 1 then
 		draw_amount = 1
 	end
+	
 	msg.post("deck", "draw", { amount = draw_amount, show_front = true })
-	timer.delay(3, false, function()
-		msg.post(".", "play_ai_turn")
-	end)
+	
+	if not self.is_player then
+		timer.delay(3, false, function()
+			msg.post(".", "play_ai_turn")
+		end)
+	end
 end
 
 local function end_turn(self)
@@ -191,9 +213,21 @@ function on_message(self, message_id, message, sender)
 	-- ai
 	elseif message_id == hash("play_ai_turn") then
 		if not self.is_player then
-			local skill_card_combination = ai.find_best_move(self)
-			if skill_card_combination then
-				ai.play_skill(skill_card_combination.skill_id, skill_card_combination.card_id)
+			local best_move = ai.find_best_move(self)
+			if best_move then
+				if best_move == ai.draw then
+					msg.post("deck", "draw", { amount = 1 })
+					timer.delay(1, false, function()
+						msg.post(".", "play_ai_turn")
+					end)
+				elseif best_move == ai.flip_random_card then
+					msg.post(".", "flip_random_card")
+					timer.delay(1, false, function()
+						msg.post(".", "play_ai_turn")
+					end)
+				else
+					ai.play_skill(best_move.skill_id, best_move.card_id)
+				end
 			else
 				msg.post(".", "end_turn")
 			end
@@ -218,6 +252,8 @@ function on_message(self, message_id, message, sender)
 		remove_card(self, message.card_id)
 	elseif message_id == hash("bring_to_front") then
 		bring_to_front(self.cards, message.card_id)
+	elseif message_id == hash("flip_random_card") then
+		flip_random_card(self.cards)
 	elseif message_id == hash("draw") then
 		msg.post("deck", message_id, message)
 	end

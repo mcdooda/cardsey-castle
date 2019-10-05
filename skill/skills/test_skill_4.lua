@@ -10,7 +10,11 @@ function skill:can_play_card(card_name)
 	return card_name and (cards.is_joker(card_name) or cards.is_number(card_name))
 end
 
-function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url, skill_id)
+function skill:prepare(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
+	return opponent_url
+end
+
+function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
 	local damage = 0
 	if cards.is_joker(card_name) then
 		damage = 15

@@ -40,7 +40,7 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		elseif message.other_group == hash("deck") and go.get(msg.url(nil, message.other_id, "deck"), "is_player_deck") then
-			if go.get("/player/character#character", "cards_count") < 6 then
+			if go.get("/player/character#character", "can_draw") then
 				msg.post("/player/deck", "draw", { amount = 1 })
 			end
 		end

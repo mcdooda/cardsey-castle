@@ -10,7 +10,11 @@ function skill:can_play_card(card_name)
 	return card_name and (cards.is_joker(card_name) or cards.is_diamonds(card_name))
 end
 
-function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url, skill_id)
+function skill:prepare(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
+	return card_player_url
+end
+
+function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
 	skill_character_helpers.reload_used_skill(card_player_url, skill_id)
 end
 
