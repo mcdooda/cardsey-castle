@@ -10,6 +10,18 @@ local function set_health_points(self, health_points, animate)
 	msg.post("main-gui", "set_health", { is_player = self.is_player, animate = animate, value = health_points, max_value = self.max_health_points })
 end
 
+local function get_character_url(is_player)
+	if is_player then
+		return msg.url("/character-player")
+	else
+		return msg.url("/character-enemy")
+	end
+end
+
+local function get_opponent_url(self)
+	return get_character_url(not self.is_player)
+end
+
 function init(self)
 	local character = assert(characters[self.name])
 	self.name = character.name
@@ -32,9 +44,21 @@ local function reload_used_skill(self, ignore_skill)
 	end
 end
 
+local function add_skill(self, skill_name, position)
+	local properties = {
+		[hash("/skill")] = {
+			skill_name = skill_name,
+			card_player = msg.url("."),
+			opponent = get_opponent_url(self)
+		}
+	}
+	local ids = collectionfactory.create("#skill-collection-factory", position, nil, properties)
+	self.skills[#self.skills + 1] = msg.url(nil, ids[hash("/skill")], "skill")
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("add_skill") then
-		self.skills[#self.skills + 1] = message.skill_id
+		add_skill(self, message.skill_name, message.position)
 	elseif message_id == hash("reload_used_skill") then
 		reload_used_skill(self, message.ignore_skill)
 	elseif message_id == hash("deal_damage") then

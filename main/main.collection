@@ -180,181 +180,6 @@ instances {
     z: 1.0
   }
 }
-collection_instances {
-  id: "skill-collection-2"
-  collection: "/skill/skill-collection.collection"
-  position {
-    x: 450.0
-    y: 925.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  instance_properties {
-    id: "skill"
-    properties {
-      id: "skill"
-      properties {
-        id: "skill_name"
-        value: "test_skill_2"
-        type: PROPERTY_TYPE_HASH
-      }
-    }
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "skill-collection-1"
-  collection: "/skill/skill-collection.collection"
-  position {
-    x: 190.0
-    y: 925.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "skill-collection-3"
-  collection: "/skill/skill-collection.collection"
-  position {
-    x: 190.0
-    y: 665.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  instance_properties {
-    id: "skill"
-    properties {
-      id: "skill"
-      properties {
-        id: "skill_name"
-        value: "test_skill_3"
-        type: PROPERTY_TYPE_HASH
-      }
-    }
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "skill-collection-4"
-  collection: "/skill/skill-collection.collection"
-  position {
-    x: 450.0
-    y: 665.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  instance_properties {
-    id: "skill"
-    properties {
-      id: "skill"
-      properties {
-        id: "skill_name"
-        value: "test_skill_4"
-        type: PROPERTY_TYPE_HASH
-      }
-    }
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "skill-collection-5"
-  collection: "/skill/skill-collection.collection"
-  position {
-    x: 190.0
-    y: 405.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  instance_properties {
-    id: "skill"
-    properties {
-      id: "skill"
-      properties {
-        id: "skill_name"
-        value: "test_skill_5"
-        type: PROPERTY_TYPE_HASH
-      }
-    }
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "skill-collection-6"
-  collection: "/skill/skill-collection.collection"
-  position {
-    x: 450.0
-    y: 405.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  instance_properties {
-    id: "skill"
-    properties {
-      id: "skill"
-      properties {
-        id: "skill_name"
-        value: "test_skill_6"
-        type: PROPERTY_TYPE_HASH
-      }
-    }
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "go"
@@ -378,6 +203,126 @@ embedded_instances {
     x: 320.0
     y: 568.0
     z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "skill-position-1"
+  data: ""
+  position {
+    x: 190.0
+    y: 925.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "skill-position-2"
+  data: ""
+  position {
+    x: 450.0
+    y: 925.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "skill-position-3"
+  data: ""
+  position {
+    x: 190.0
+    y: 665.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "skill-position-4"
+  data: ""
+  position {
+    x: 450.0
+    y: 665.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "skill-position-5"
+  data: ""
+  position {
+    x: 190.0
+    y: 405.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "skill-position-6"
+  data: ""
+  position {
+    x: 450.0
+    y: 405.0
+    z: 0.1
   }
   rotation {
     x: 0.0

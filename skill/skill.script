@@ -9,7 +9,6 @@ function init(self)
 	self.skill = assert(skills[self.skill_name], "cannot find card " .. tostring(self.skill_name))
 	label.set_text("#requirements-label", self.skill.requirements)
 	label.set_text("#description-label", self.skill.description)
-	msg.post(self.card_player, "add_skill", { skill_id = msg.url("#") })
 	self.initial_y = go.get_position().y
 
 	go.set_parent("skill-background", msg.url("."), true)
