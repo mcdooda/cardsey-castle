@@ -24,7 +24,7 @@ local function find_card_index(cards, card)
 			return i
 		end
 	end
-	assert(false, "could not find card", card)
+	assert(false, "could not find card " .. tostring(card))
 end
 
 local function bring_to_front(cards, card)

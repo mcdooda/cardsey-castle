@@ -7,9 +7,8 @@ go.property("is_player", true)
 go.property("health_points", 1)
 go.property("max_health_points", 1)
 
-local function set_health_points(self, health_points, animate)
-	self.health_points = health_points
-	msg.post("/main-gui", "set_health", { is_player = self.is_player, animate = animate, initial_value = self.health_points, value = health_points, max_value = self.max_health_points })
+function init(self)
+	self.is_current_turn = false
 end
 
 local function get_character_url(is_player)
@@ -24,6 +23,54 @@ local function get_opponent_url(self)
 	return get_character_url(not self.is_player)
 end
 
+local function add_skill(self, skill_name, position)
+	local properties = {
+		[hash("/skill")] = {
+			skill_name = skill_name,
+			card_player = msg.url("."),
+			opponent = get_opponent_url(self)
+		}
+	}
+	local ids = collectionfactory.create("#skill-collection-factory", position, nil, properties)
+	self.skills[#self.skills + 1] = {
+		ids = ids,
+		skill_url = msg.url(nil, ids[hash("/skill")], "skill")
+	}
+end
+
+local function remove_skill(self, skill_index)
+	local ids = self.skills[skill_index].ids
+	go.delete(ids)
+end
+
+local function start_turn(self)
+	assert(not self.is_current_turn)
+	self.is_current_turn = true
+	for i = 1, #self.character.skills do
+		local skill_name = self.character.skills[i]
+		local skill_position = go.get_position("/skill-position-" .. tostring(i))
+		add_skill(self, skill_name, skill_position)
+	end
+	msg.post("deck", "draw", { amount = 6, show_front = true })
+end
+
+local function end_turn(self)
+	if not self.is_current_turn then
+		return
+	end
+	for i = 1, #self.skills do
+		remove_skill(self, i, false)
+	end
+	self.skills = {}
+	self.is_current_turn = false
+	msg.post(get_opponent_url(self), "start_turn")
+end
+
+local function set_health_points(self, health_points, animate)
+	self.health_points = health_points
+	msg.post("/main-gui", "set_health", { is_player = self.is_player, animate = animate, initial_value = self.health_points, value = health_points, max_value = self.max_health_points })
+end
+
 function init(self)
 	local character = assert(characters[self.name])
 	self.name = character.name
@@ -36,7 +83,7 @@ end
 local function reload_used_skill(self, ignore_skill)
 	local used_skills = {}
 	for i = 1, #self.skills do
-		local skill = self.skills[i]
+		local skill = self.skills[i].skill_url
 		if skill ~= ignore_skill and go.get(skill, "used") then
 			used_skills[#used_skills + 1] = skill
 		end
@@ -47,28 +94,11 @@ local function reload_used_skill(self, ignore_skill)
 	end
 end
 
-local function add_skill(self, skill_name, position)
-	local properties = {
-		[hash("/skill")] = {
-			skill_name = skill_name,
-			card_player = msg.url("."),
-			opponent = get_opponent_url(self)
-		}
-	}
-	local ids = collectionfactory.create("#skill-collection-factory", position, nil, properties)
-	self.skills[#self.skills + 1] = msg.url(nil, ids[hash("/skill")], "skill")
-end
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("start_turn") then
-		for i = 1, #self.character.skills do
-			local skill_name = self.character.skills[i]
-			local skill_position = go.get_position("/skill-position-" .. tostring(i))
-			add_skill(self, skill_name, skill_position)
-		end
-		msg.post("deck", "draw", { amount = 6, show_front = true })
-	elseif message_id == hash("add_skill") then
-		add_skill(self, message.skill_name, message.position)
+		start_turn(self)
+	elseif message_id == hash("end_turn") then
+		end_turn(self)
 	elseif message_id == hash("reload_used_skill") then
 		reload_used_skill(self, message.ignore_skill_id)
 	elseif message_id == hash("deal_damage") then

@@ -2,7 +2,7 @@ local cards = require("card.cards")
 
 go.property("card_name", hash("red-joker"))
 go.property("showing_front", false)
-go.property("hand", hash("/player/hand"))
+go.property("hand", msg.url("/player/hand"))
 
 local turn_animation_duration = 0.4
 
