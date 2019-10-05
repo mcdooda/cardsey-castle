@@ -2,11 +2,12 @@ local cards = require("card.cards")
 
 go.property("card_name", hash("red-joker"))
 go.property("showing_front", false)
+go.property("hand", hash("/player/hand"))
 
 local turn_animation_duration = 0.4
 
 function init(self)
-	msg.post("/hand", "add_card", { card_id = msg.url(".") })
+	msg.post(self.hand, "add_card", { card_id = msg.url(".") })
 	self.initial_scale = go.get_scale()
 	self.animating = false
 	self.showing_front = false

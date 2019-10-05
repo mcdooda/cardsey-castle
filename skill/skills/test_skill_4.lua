@@ -1,4 +1,5 @@
 local cards = require("card.cards")
+local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
@@ -9,14 +10,14 @@ function skill:can_play_card(card_name)
 	return card_name and (cards.is_joker(card_name) or cards.is_number(card_name))
 end
 
-function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url)
+function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url, skill_id)
 	local damage = 0
 	if cards.is_joker(card_name) then
 		damage = 15
 	else
 		damage = cards.get_value(card_name)
 	end
-	msg.post(opponent_url, "deal_damage", { amount = damage })
+	skill_character_helpers.deal_damage(opponent_url, damage)
 end
 
 return skill

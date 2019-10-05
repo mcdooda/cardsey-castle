@@ -1,4 +1,5 @@
 local cards = require("card.cards")
+local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
@@ -9,9 +10,8 @@ function skill:can_play_card(card_name)
 	return card_name and (cards.is_joker(card_name) or cards.is_face(card_name))
 end
 
-function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url)
-	-- TODO: draw on card_player_url's hand
-	msg.post("/deck", "draw", { amount = 3 })
+function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url, skill_id)
+	skill_character_helpers.draw(card_player_url, 3)
 end
 
 return skill

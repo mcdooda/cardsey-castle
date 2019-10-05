@@ -2,19 +2,21 @@ local characters = require("character.characters")
 
 go.property("name", hash("Player"))
 go.property("is_player", true)
+
+-- read only properties
 go.property("health_points", 1)
 go.property("max_health_points", 1)
 
 local function set_health_points(self, health_points, animate)
 	self.health_points = health_points
-	msg.post("main-gui", "set_health", { is_player = self.is_player, animate = animate, value = health_points, max_value = self.max_health_points })
+	msg.post("/main-gui", "set_health", { is_player = self.is_player, animate = animate, value = health_points, max_value = self.max_health_points })
 end
 
 local function get_character_url(is_player)
 	if is_player then
-		return msg.url("/character-player")
+		return msg.url("/player/character")
 	else
-		return msg.url("/character-enemy")
+		return msg.url("/enemy/character")
 	end
 end
 
@@ -27,6 +29,7 @@ function init(self)
 	self.name = character.name
 	self.max_health_points = character.health_points
 	set_health_points(self, character.health_points, false)
+	self.character = character
 	self.skills = {}
 end
 
@@ -57,10 +60,17 @@ local function add_skill(self, skill_name, position)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("add_skill") then
+	if message_id == hash("start_turn") then
+		for i = 1, #self.character.skills do
+			local skill_name = self.character.skills[i]
+			local skill_position = go.get_position("/skill-position-" .. tostring(i))
+			add_skill(self, skill_name, skill_position)
+		end
+		msg.post("deck", "draw", { amount = 6, show_front = true })
+	elseif message_id == hash("add_skill") then
 		add_skill(self, message.skill_name, message.position)
 	elseif message_id == hash("reload_used_skill") then
-		reload_used_skill(self, message.ignore_skill)
+		reload_used_skill(self, message.ignore_skill_id)
 	elseif message_id == hash("deal_damage") then
 		local new_health_points = math.max(self.health_points - message.amount, 0)
 		set_health_points(self, new_health_points, true)
@@ -69,5 +79,9 @@ function on_message(self, message_id, message, sender)
 		set_health_points(self, new_health_points, true)
 	elseif message_id == hash("set_health_points") then
 		set_health_points(self, message.health_points, true)
+	elseif message_id == hash("remove_card") then
+		msg.post("hand", message_id, message)
+	elseif message_id == hash("draw") then
+		msg.post("deck", message_id, message)
 	end
 end

@@ -1,4 +1,5 @@
 local cards = require("card.cards")
+local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
@@ -10,7 +11,7 @@ function skill:can_play_card(card_name)
 end
 
 function skill:execute(skill_script_component, card_name, showing_front, card_player_url, opponent_url, skill_id)
-	msg.post(card_player_url, "reload_used_skill", { ignore_skill = skill_id })
+	skill_character_helpers.reload_used_skill(card_player_url, skill_id)
 end
 
 return skill

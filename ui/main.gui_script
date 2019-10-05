@@ -11,7 +11,6 @@ local function get_character_node(is_player, path)
 end
 
 local function set_health(self, is_player, value, max_value, animate)
-	
 	local red = get_character_node(is_player, "healthbar-red")
 	local green = get_character_node(is_player, "healthbar-green")
 	local text = get_character_node(is_player, "healthbar-text")

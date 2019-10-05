@@ -1,6 +1,6 @@
 components {
   id: "hand"
-  component: "/hand/hand.script"
+  component: "/character/hand/hand.script"
   position {
     x: 0.0
     y: 0.0

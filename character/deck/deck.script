@@ -1,3 +1,5 @@
+go.property("is_player_deck", true)
+
 local cards = require("card.cards")
 
 function init(self)
@@ -41,7 +43,7 @@ function on_message(self, message_id, message, sender)
 				if show_front then
 					msg.post(msg.url(nil, card, nil), "show_front")
 				end
-				msg.post("/hand", "bring_to_front", { card_id = msg.url(nil, card, nil) })
+				msg.post("hand", "bring_to_front", { card_id = msg.url(nil, card, nil) })
 			end)
 		end
 	end

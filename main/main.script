@@ -2,12 +2,7 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 
-	for i = 1, 6 do
-		local skill_position = go.get_position("/skill-position-" .. tostring(i))
-		msg.post("/character-player", "add_skill", { skill_name = hash("test_skill_" .. tostring(i)), position = skill_position })
-	end
-	
-	msg.post("/deck", "draw", { amount = 6, show_front = true })
+	msg.post("/player/character", "start_turn")
 end
 
 function on_input(self, action_id, action)

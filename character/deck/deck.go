@@ -1,6 +1,6 @@
 components {
   id: "deck"
-  component: "/deck/deck.script"
+  component: "/character/deck/deck.script"
   position {
     x: 0.0
     y: 0.0
