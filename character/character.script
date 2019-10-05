@@ -7,9 +7,60 @@ go.property("is_player", true)
 -- read only properties
 go.property("health_points", 1)
 go.property("max_health_points", 1)
+go.property("cards_count", 0)
 
-function init(self)
-	self.is_current_turn = false
+-- cards in hand
+local cards_z_min = 0.5
+local cards_z_max = 1
+
+local function get_z(object)
+	return go.get_position(object).z
+end
+
+local function set_z(object, z)
+	local position = go.get_position(object)
+	position.z = z
+	go.set_position(position, object)
+end
+
+local function find_card_index(cards, card)
+	assert(cards)
+	assert(card)
+	for i = 1, #cards do
+		if cards[i] == card then
+			return i
+		end
+	end
+	assert(false, "could not find card " .. tostring(card))
+end
+
+local function bring_to_front(cards, card)
+	local card_index = find_card_index(cards, card)
+	if #cards == 1 then
+		assert(cards[1] == card)
+		set_z(card, cards_z_min)
+	else
+		table.remove(cards, card_index)
+		cards[#cards + 1] = card
+		local space_between_cards = (cards_z_max - cards_z_min) / (#cards - 1)
+		for i = 1, #cards do
+			local card_z = (i - 1) * space_between_cards + cards_z_min
+			set_z(cards[i], card_z)
+		end
+	end
+end
+
+local function add_card(self, card_id)
+	self.cards[#self.cards + 1] = card_id
+	self.cards_count = self.cards_count + 1
+	bring_to_front(self.cards, card_id)
+end
+
+local function remove_card(self, card_id)
+	local card_index = find_card_index(self.cards, card_id)
+	table.remove(self.cards, card_index)
+	go.delete(card_id)
+	self.cards_count = self.cards_count - 1
 end
 
 local function get_character_url(is_player)
@@ -52,8 +103,7 @@ local function start_turn(self)
 		local skill_position = go.get_position("/skill-position-" .. tostring(i))
 		add_skill(self, skill_name, skill_position)
 	end
-	local hand_size = go.get("hand#hand", "size")
-	local draw_amount = 6 - hand_size
+	local draw_amount = 6 - self.cards_count
 	if draw_amount < 1 then
 		draw_amount = 1
 	end
@@ -82,11 +132,15 @@ end
 
 function init(self)
 	local character = assert(characters[self.name])
+	self.character = character
+	
 	self.name = character.name
 	self.max_health_points = character.health_points
 	set_health_points(self, character.health_points, false)
-	self.character = character
+	
+	self.is_current_turn = false
 	self.skills = {}
+	self.cards = {}
 end
 
 local function reload_used_skill(self, ignore_skill)
@@ -101,6 +155,17 @@ local function reload_used_skill(self, ignore_skill)
 		local random_index = math.random(1, #used_skills)
 		msg.post(used_skills[random_index], "reload_skill")
 	end
+end
+
+local function find_card_index(cards, card)
+	assert(cards)
+	assert(card)
+	for i = 1, #cards do
+		if cards[i] == card then
+			return i
+		end
+	end
+	assert(false, "could not find card " .. tostring(card))
 end
 
 function on_message(self, message_id, message, sender)
@@ -124,8 +189,12 @@ function on_message(self, message_id, message, sender)
 		set_health_points(self, new_health_points, true)
 	elseif message_id == hash("set_health_points") then
 		set_health_points(self, message.health_points, true)
+	elseif message_id == hash("add_card") then
+		add_card(self, message.card_id)
 	elseif message_id == hash("remove_card") then
-		msg.post("hand", message_id, message)
+		remove_card(self, message.card_id)
+	elseif message_id == hash("bring_to_front") then
+		bring_to_front(self.cards, message.card_id)
 	elseif message_id == hash("draw") then
 		msg.post("deck", message_id, message)
 	end

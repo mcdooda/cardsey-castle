@@ -2,27 +2,17 @@ local cards = require("card.cards")
 
 go.property("card_name", hash("red-joker"))
 go.property("showing_front", false)
-go.property("hand", msg.url("/player/hand"))
+go.property("character", msg.url("/player/character"))
 
 local turn_animation_duration = 0.4
 
 function init(self)
-	msg.post(self.hand, "add_card", { card_id = msg.url(".") })
+	msg.post(self.character, "add_card", { card_id = msg.url(".") })
 	self.initial_scale = go.get_scale()
 	self.animating = false
 	self.showing_front = false
 	self.skill = nil
 	self.card_name_string = cards.get_string(self.card_name)
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Remove this function if not needed
 end
 
 local function show_front(self, done)
@@ -100,9 +90,4 @@ function on_input(self, action_id, action)
 			msg.post(".", "show_front")
 		end
 	end
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Remove this function if not needed
 end

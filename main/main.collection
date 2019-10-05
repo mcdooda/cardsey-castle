@@ -3,8 +3,8 @@ instances {
   id: "cursor"
   prototype: "/cursor/cursor.go"
   position {
-    x: -237.0
-    y: 523.0
+    x: -249.0
+    y: -55.0
     z: 0.0
   }
   rotation {

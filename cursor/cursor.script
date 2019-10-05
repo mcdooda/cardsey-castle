@@ -15,7 +15,7 @@ function update(self)
 		go.set_position(new_card_position, self.card)
 	end
 	if self.card then
-		msg.post("/player/hand", "bring_to_front", { card_id = msg.url(self.card) })
+		msg.post("/player/character", "bring_to_front", { card_id = msg.url(self.card) })
 	end
 end
 
@@ -37,7 +37,7 @@ function on_message(self, message_id, message, sender)
 				msg.post(".", "bring_card_to_front")
 			end
 		elseif message.other_group == hash("deck") and go.get(msg.url(nil, message.other_id, "deck"), "is_player_deck") then
-			if go.get("/player/hand#hand", "size") < 6 then
+			if go.get("/player/character#character", "cards_count") < 6 then
 				msg.post("/player/deck", "draw", { amount = 1 })
 			end
 		end
