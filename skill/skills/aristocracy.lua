@@ -3,6 +3,7 @@ local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
+skill.name = "Codfish aristocracy"
 skill.description = "Draw 3 cards\n(no hand limit)"
 skill.requirements = "Faces only"
 

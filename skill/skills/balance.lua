@@ -3,6 +3,7 @@ local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
+skill.name = "Balance is the key"
 skill.description = "Balance health points"
 skill.requirements = "Jokers only"
 

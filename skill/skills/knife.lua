@@ -3,11 +3,12 @@ local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
-skill.description = "Deal [X] damage"
-skill.requirements = "Numbers only"
+skill.name = "Twist the knife"
+skill.description = "Destroy a face-up card from the opponent's hand"
+skill.requirements = ""
 
 function skill:can_play_card(card_name)
-	return card_name and (cards.is_joker(card_name) or cards.is_number(card_name))
+	return true
 end
 
 function skill:prepare(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
@@ -15,13 +16,7 @@ function skill:prepare(card_name, showing_front, card_player_url, opponent_url, 
 end
 
 function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
-	local damage = 0
-	if cards.is_joker(card_name) then
-		damage = 15
-	else
-		damage = cards.get_value(card_name)
-	end
-	skill_character_helpers.deal_damage(opponent_url, damage)
+	skill_character_helpers.destroy_faceup_card(opponent_url)
 end
 
 return skill

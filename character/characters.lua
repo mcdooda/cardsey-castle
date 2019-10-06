@@ -10,20 +10,20 @@ local function add_character(name, health_points, skills)
 end
 
 add_character("Player", 100, {
-	hash("test_skill_1"),
-	hash("test_skill_2"),
-	hash("test_skill_3"),
-	hash("test_skill_4"),
-	hash("test_skill_5"),
-	hash("test_skill_6")
+	hash("balance"),
+	hash("refresh"),
+	hash("choose"),
+	hash("half"),
+	hash("trick"),
+	hash("aristocracy")
 })
 add_character("Enemy", 100, {
-	hash("test_skill_7"),
-	hash("test_skill_2"),
-	hash("test_skill_3"),
-	hash("test_skill_4"),
-	hash("test_skill_5"),
-	hash("test_skill_6")
+	hash("knife"),
+	hash("refresh"),
+	hash("choose"),
+	hash("half"),
+	hash("trick"),
+	hash("aristocracy")
 })
 
 return characters

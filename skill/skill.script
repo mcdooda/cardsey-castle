@@ -7,6 +7,7 @@ local skills = require("skill.skills")
 
 function init(self)
 	self.skill = assert(skills[self.skill_name], "cannot find card " .. tostring(self.skill_name))
+	label.set_text("#name-label", self.skill.name)
 	label.set_text("#requirements-label", self.skill.requirements)
 	label.set_text("#description-label", self.skill.description)
 	self.initial_y = go.get_position().y
@@ -52,6 +53,7 @@ function on_message(self, message_id, message, sender)
 		if go.get(msg.url(nil, card, "card"), "character") == self.card_player then
 			if message.enter then
 				if can_play_card(self, card) then
+					--print("entered_skill", self.skill_name, go.get(msg.url(nil, card, "card"), "card_name"))
 					msg.post(card, "entered_skill", { skill_id = msg.url(".") })
 					--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 1, 0.4, 1))
 				else
@@ -62,6 +64,7 @@ function on_message(self, message_id, message, sender)
 				end
 			else
 				if can_play_card(self, card) then
+					--print("left_skill", self.skill_name, go.get(msg.url(nil, card, "card"), "card_name"))
 					msg.post(message.other_id, "left_skill", { skill_id = msg.url(".") })
 				end
 				--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 0.74, 1, 1))

@@ -3,6 +3,7 @@ local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
+skill.name = "Trick or treat"
 skill.description = "Red: Heal [X]\nBlack: Deal [X] damage"
 skill.requirements = "Face down cards only"
 

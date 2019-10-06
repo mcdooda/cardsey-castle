@@ -3,7 +3,8 @@ local skill_character_helpers = require("skill.skill_character_helpers")
 
 local skill = {}
 
-skill.description = "Reload a used skill"
+skill.name = "Refresh memory"
+skill.description = "Refresh a used skill"
 skill.requirements = "Diamonds only"
 
 function skill:can_play_card(card_name)
