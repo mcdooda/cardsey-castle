@@ -65,7 +65,7 @@ embedded_components {
   type: "label"
   data: "size {\n"
   "  x: 240.0\n"
-  "  y: 40.0\n"
+  "  y: 36.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -104,7 +104,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -116.0
+    y: -114.0
     z: 0.0
   }
   rotation {
@@ -193,7 +193,7 @@ embedded_components {
   type: "label"
   data: "size {\n"
   "  x: 240.0\n"
-  "  y: 26.0\n"
+  "  y: 32.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -229,12 +229,12 @@ embedded_components {
   "text: \"Name\\n"
   "\"\n"
   "  \"\"\n"
-  "font: \"/builtins/fonts/system_font.font\"\n"
+  "font: \"/skill/skill_font.font\"\n"
   "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {
     x: 0.0
-    y: 109.0
+    y: 115.0
     z: 0.0
   }
   rotation {
