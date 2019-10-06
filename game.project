@@ -65,3 +65,7 @@ max_collisions = 256
 [sprite]
 max_count = 200
 
+[graphics]
+default_texture_min_filter = linear
+default_texture_mag_filter = linear
+

@@ -53,16 +53,18 @@ function on_message(self, message_id, message, sender)
 			if message.enter then
 				if can_play_card(self, card) then
 					msg.post(card, "entered_skill", { skill_id = msg.url(".") })
-					go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 1, 0.4, 1))
+					--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 1, 0.4, 1))
 				else
-					shake(self)
-					go.set("skill-background#rectangle", "color", vmath.vector4(1, 0.4, 0.4, 1))
+					if go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
+						shake(self)
+					end
+					--go.set("skill-background#rectangle", "color", vmath.vector4(1, 0.4, 0.4, 1))
 				end
 			else
 				if can_play_card(self, card) then
 					msg.post(message.other_id, "left_skill", { skill_id = msg.url(".") })
 				end
-				go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 0.74, 1, 1))
+				--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 0.74, 1, 1))
 			end
 		end
 	elseif message_id == hash("execute_skill") then
@@ -88,7 +90,7 @@ function on_message(self, message_id, message, sender)
 			msg.post(self.card_player, "remove_card", { card_id = card })
 
 			if not go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
-				timer.delay(2, false, function()
+				timer.delay(1, false, function()
 					msg.post(self.card_player, "play_ai_turn")
 				end)
 			end
