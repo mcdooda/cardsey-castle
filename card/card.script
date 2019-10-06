@@ -11,7 +11,7 @@ function init(self)
 	self.initial_scale = go.get_scale()
 	self.animating = false
 	self.showing_front = false
-	self.skill = nil
+	self.skills = {}
 	self.card_name_string = cards.get_string(self.card_name)
 end
 
@@ -32,30 +32,40 @@ local function show_front(self, done)
 	end)
 end
 
+local function find_skill_index(skills, skill)
+	for i = 1, #skills do
+		if skills[i] == skill then
+			return i
+		end
+	end
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("click") then
 		if not self.showing_front then
 			msg.post(".", "show_front")
 		end
 	elseif message_id == hash("entered_skill") then
-		self.skill = message.skill_id
+		assert(not find_skill_index(self.skills, message.skill_id))
+		self.skills[#self.skills + 1] = message.skill_id
 	elseif message_id == hash("left_skill") then
-		self.skill = nil
+		local skill_index = assert(find_skill_index(self.skills, message.skill_id), "Cannot find skill " .. tostring(message.skill_id))
+		table.remove(self.skills, skill_index)
 	elseif message_id == hash("drag") then
 		msg.post("#cards-collision", "disable")
 	elseif message_id == hash("drop") then
-		if self.skill then
-			local skill_position = go.get_position(self.skill)
+		if #self.skills == 1 then
+			local skill = self.skills[1]
+			local skill_position = go.get_position(skill)
 			local card_position = go.get_position()
 			local position = vmath.vector3()
 			position.x = skill_position.x
 			position.y = skill_position.y
 			position.z = card_position.z
-			local skill = self.skill
 			go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTQUINT, 0.3)
 			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_OUTQUINT, 0.3, 0, function()
 				local function set_parent_execute()
-					go.set_parent(msg.url("."), self.skill, true)
+					go.set_parent(msg.url("."), skill, true)
 					msg.post(skill, "execute_skill", { card_id = msg.url(".") })
 				end
 				if self.showing_front then

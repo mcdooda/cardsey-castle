@@ -9,7 +9,7 @@ local function add_character(name, health_points, skills)
 	characters[hash(name)] = character
 end
 
-add_character("Player", 20, {
+add_character("Player", 100, {
 	hash("test_skill_1"),
 	hash("test_skill_2"),
 	hash("test_skill_3"),
@@ -17,7 +17,7 @@ add_character("Player", 20, {
 	hash("test_skill_5"),
 	hash("test_skill_6")
 })
-add_character("Enemy", 20, {
+add_character("Enemy", 100, {
 	hash("test_skill_7"),
 	hash("test_skill_2"),
 	hash("test_skill_3"),

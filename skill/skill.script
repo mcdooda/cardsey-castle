@@ -60,7 +60,7 @@ function on_message(self, message_id, message, sender)
 				end
 			else
 				if can_play_card(self, card) then
-					msg.post(message.other_id, "left_skill")
+					msg.post(message.other_id, "left_skill", { skill_id = msg.url(".") })
 				end
 				go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 0.74, 1, 1))
 			end
