@@ -19,7 +19,7 @@ function on_message(self, message_id, message, sender)
 		self.color.y = message.color.y
 		self.color.z = message.color.z
 		local initial_w = self.color.w
-		local set_color_duration = 0.2
+		local set_color_duration = 0.1
 		local total_time = 0
 		self.timer = timer.delay(0, true, function(self, handle, time_elapsed)
 			if total_time >= set_color_duration then
@@ -38,7 +38,7 @@ function on_message(self, message_id, message, sender)
 			self.timer = nil
 		end
 		local initial_w = self.color.w
-		local clear_duration = 0.1
+		local clear_duration = 0.05
 		local total_time = 0
 		self.timer = timer.delay(0, true, function(self, handle, time_elapsed)
 			if total_time >= clear_duration then

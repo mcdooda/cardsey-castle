@@ -1,11 +1,13 @@
 local cards = require("card.cards")
 local skill_character_helpers = require("skill.skill_character_helpers")
+local skill_colors = require("skill.skill_colors")
 
 local skill = {}
 
 skill.name = "Twist the knife"
 skill.description = "Destroy a face-up card from the opponent's hand"
 skill.requirements = ""
+skill.color = skill_colors.damage
 
 function skill:can_play_card(card_name)
 	return true

@@ -1,11 +1,13 @@
 local cards = require("card.cards")
 local skill_character_helpers = require("skill.skill_character_helpers")
+local skill_colors = require("skill.skill_colors")
 
 local skill = {}
 
 skill.name = "Balance is the key"
 skill.description = "Balance health points"
 skill.requirements = "Jokers only"
+skill.color = skill_colors.neutral_gray
 
 function skill:can_play_card(card_name)
 	return card_name and cards.is_joker(card_name)

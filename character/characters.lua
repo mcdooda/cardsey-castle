@@ -11,19 +11,19 @@ end
 
 add_character("Player", 100, {
 	hash("balance"),
-	hash("refresh"),
+	hash("trick"),
 	hash("choose"),
 	hash("half"),
-	hash("trick"),
+	hash("refresh"),
 	hash("aristocracy")
 })
 add_character("Enemy", 100, {
-	hash("knife"),
+	hash("aristocracy"),
 	hash("refresh"),
 	hash("choose"),
 	hash("half"),
+	hash("knife"),
 	hash("trick"),
-	hash("aristocracy")
 })
 
 return characters

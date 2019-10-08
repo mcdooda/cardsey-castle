@@ -12,8 +12,16 @@ function init(self)
 	label.set_text("#description-label", self.skill.description)
 	self.initial_y = go.get_position().y
 
+	msg.post("skill-background", "set_color", { color = self.skill.color })
 	go.set_parent("skill-background", msg.url("."), true)
+
+	local name_background_color = vmath.vector4(self.skill.color)
+	name_background_color.x = math.max(name_background_color.x - 0.1, 0)
+	name_background_color.y = math.max(name_background_color.y - 0.1, 0)
+	name_background_color.z = math.max(name_background_color.z - 0.1, 0)
+	msg.post("skill-name-background", "set_color", { color = name_background_color })
 	go.set_parent("skill-name-background", msg.url("."), true)
+	
 	go.set_parent("skill-outline", msg.url("."), true)
 	msg.post("skill-outline", "disable")
 end

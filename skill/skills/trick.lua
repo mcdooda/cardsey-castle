@@ -1,11 +1,13 @@
 local cards = require("card.cards")
 local skill_character_helpers = require("skill.skill_character_helpers")
+local skill_colors = require("skill.skill_colors")
 
 local skill = {}
 
 skill.name = "Trick or treat"
 skill.description = "Red: Heal [X]\nBlack: Deal [X] damage"
 skill.requirements = "Face down cards only"
+skill.color = skill_colors.neutral_gray
 
 function skill:can_play_card(card_name)
 	return not card_name

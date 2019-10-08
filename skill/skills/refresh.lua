@@ -1,11 +1,13 @@
 local cards = require("card.cards")
 local skill_character_helpers = require("skill.skill_character_helpers")
+local skill_colors = require("skill.skill_colors")
 
 local skill = {}
 
 skill.name = "Refresh memory"
 skill.description = "Refresh a used skill"
 skill.requirements = "Diamonds only"
+skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)
 	return card_name and (cards.is_joker(card_name) or cards.is_diamonds(card_name))
