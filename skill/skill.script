@@ -14,6 +14,8 @@ function init(self)
 
 	go.set_parent("skill-background", msg.url("."), true)
 	go.set_parent("skill-name-background", msg.url("."), true)
+	go.set_parent("skill-outline", msg.url("."), true)
+	msg.post("skill-outline", "disable")
 end
 
 local function can_play_card(self, card)
@@ -57,6 +59,7 @@ function on_message(self, message_id, message, sender)
 					--print("entered_skill", self.skill_name, go.get(msg.url(nil, card, "card"), "card_name"))
 					msg.post(card, "entered_skill", { skill_id = msg.url(".") })
 					--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 1, 0.4, 1))
+					msg.post("skill-outline", "enable")
 				else
 					if go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
 						shake(self)
@@ -67,6 +70,7 @@ function on_message(self, message_id, message, sender)
 				if can_play_card(self, card) then
 					--print("left_skill", self.skill_name, go.get(msg.url(nil, card, "card"), "card_name"))
 					msg.post(message.other_id, "left_skill", { skill_id = msg.url(".") })
+					msg.post("skill-outline", "disable")
 				end
 				--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 0.74, 1, 1))
 			end

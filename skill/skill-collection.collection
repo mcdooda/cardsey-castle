@@ -67,4 +67,24 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "skill-outline"
+  prototype: "/skill/outline/outline.go"
+  position {
+    x: 0.0
+    y: -16.0
+    z: 0.25
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 240.0
+    y: 240.0
+    z: 1.0
+  }
+}
 scale_along_z: 0

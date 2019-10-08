@@ -8,8 +8,8 @@ uniform highp vec4 time;
 
 void main()
 {
-	const mediump float width = 10.0;
-	const mediump float speed = 0.7;
+	const highp float width = 50.0;
+	const highp float speed = 5.0;
 	highp float a = mod(var_texcoord0.x * shader_scale.x - var_texcoord0.y * shader_scale.y - time.x * speed, width) / width;
 	if (a < 0.5)
 	{

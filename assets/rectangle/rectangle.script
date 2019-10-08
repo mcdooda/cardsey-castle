@@ -12,3 +12,10 @@ function update(self, dt)
 	go.set("#sprite", "time", self.time)
 	go.set("#sprite", "color", self.color)
 end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_color") then
+		self.color = message.color
+		go.set("#sprite", "color", self.color)
+	end
+end
