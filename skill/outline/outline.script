@@ -1,7 +1,55 @@
-go.property("color", vmath.vector4(1, 1, 1, 0.6))
+go.property("color", vmath.vector4(1, 1, 1, 0))
 
 function init(self)
+	self.color_max_w = 0.6
 	go.set("#sprite", "color", self.color)
 	local scale = go.get_scale()
 	go.set("#sprite", "shader_scale", vmath.vector4(scale.x, scale.y, 0, 0))
+	self.timer = nil
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_color") then
+		msg.post(".", "enable")
+		if self.timer then
+			timer.cancel(self.timer)
+			self.timer = nil
+		end
+		self.color.x = message.color.x
+		self.color.y = message.color.y
+		self.color.z = message.color.z
+		local initial_w = self.color.w
+		local set_color_duration = 0.2
+		local total_time = 0
+		self.timer = timer.delay(0, true, function(self, handle, time_elapsed)
+			if total_time >= set_color_duration then
+				timer.cancel(handle)
+				self.timer = nil
+				self.color.w = self.color_max_w
+			else
+				self.color.w = initial_w + total_time / set_color_duration * (self.color_max_w - initial_w)
+			end
+			go.set("#sprite", "color", self.color)
+			total_time = total_time + time_elapsed
+		end)
+	elseif message_id == hash("clear") then
+		if self.timer then
+			timer.cancel(self.timer)
+			self.timer = nil
+		end
+		local initial_w = self.color.w
+		local clear_duration = 0.1
+		local total_time = 0
+		self.timer = timer.delay(0, true, function(self, handle, time_elapsed)
+			if total_time >= clear_duration then
+				timer.cancel(handle)
+				self.timer = nil
+				self.color.w = 0
+			else
+				self.color.w = initial_w - total_time / clear_duration * initial_w
+			end
+			go.set("#sprite", "color", self.color)
+			total_time = total_time + time_elapsed
+		end)
+	end
 end
