@@ -76,6 +76,8 @@ function on_message(self, message_id, message, sender)
 					end)
 				end
 			end)
+		elseif #self.skills > 1 then
+			msg.post(".", "drop") -- try again
 		else
 			msg.post("#cards-collision", "enable")
 		end

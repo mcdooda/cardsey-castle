@@ -7,5 +7,7 @@ skills[hash("choose")] = require("skill.skills.choose")
 skills[hash("half")] = require("skill.skills.half")
 skills[hash("aristocracy")] = require("skill.skills.aristocracy")
 skills[hash("knife")] = require("skill.skills.knife")
+skills[hash("unplayable")] = require("skill.skills.unplayable")
+skills[hash("nothing")] = require("skill.skills.nothing")
 
 return skills
