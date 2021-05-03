@@ -6,6 +6,21 @@ function init(self)
 	self.stack = cards.init_stack()
 end
 
+local function create_card_object(card_name, is_in_hand)
+	local position = go.get_position()
+	local rotation = go.get_rotation()
+	local scale = go.get_scale()
+	local properties = {
+		card_name = card_name,
+		character = msg.url("character"),
+		is_in_hand = is_in_hand
+	}
+	local card = factory.create("#card-factory", position, rotation, properties, scale)
+	msg.post(msg.url(nil, card, "collisionobject"), "disable")
+	msg.post(msg.url(nil, card, "cards-collision"), "disable")
+	return card
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("draw") then
 		if #self.stack == 0 then
@@ -13,21 +28,14 @@ function on_message(self, message_id, message, sender)
 		end
 		local show_front = message.show_front
 		local amount = math.min(message.amount, #self.stack)
+		
+		local draw_position_url = self.is_player_deck and msg.url("draw-position-player") or msg.url("draw-position-enemy")
+		local card_destination_position = go.get_position(draw_position_url)
+		
 		for i = 1, amount do
 			local top_card_name = self.stack[#self.stack]
 			self.stack[#self.stack] = nil
-			local position = go.get_position()
-			local rotation = go.get_rotation()
-			local scale = go.get_scale()
-			local properties = {
-				card_name = top_card_name,
-				character = msg.url("character")
-			}
-			local card = factory.create("#card-factory", position, rotation, properties, scale)
-			msg.post(msg.url(nil, card, "collisionobject"), "disable")
-			msg.post(msg.url(nil, card, "cards-collision"), "disable")
-			local draw_position_url = self.is_player_deck and msg.url("draw-position-player") or msg.url("draw-position-enemy")
-			local card_destination_position = go.get_position(draw_position_url)
+			local card = create_card_object(top_card_name, true)
 			go.animate(msg.url(nil, card, nil), "position.x", go.PLAYBACK_ONCE_FORWARD, card_destination_position.x, go.EASING_INOUTCUBIC, 0.4, (i - 1) * 0.2)
 			go.animate(msg.url(nil, card, nil), "position.y", go.PLAYBACK_ONCE_FORWARD, card_destination_position.y, go.EASING_INOUTCUBIC, 0.4, (i - 1) * 0.2, function()
 				msg.post(msg.url(nil, card, "collisionobject"), "enable")
@@ -35,6 +43,43 @@ function on_message(self, message_id, message, sender)
 				if show_front then
 					msg.post(msg.url(nil, card, nil), "show_front")
 				end
+			end)
+		end
+	elseif message_id == hash("discard_stack_cards_of_suits") then
+		if #self.stack == 0 then
+			return
+		end
+		local suits = message.suits
+		local cards_to_discard = {}
+		for i = #self.stack, 1, -1 do
+			local card_name = self.stack[i]
+			for j = 1, #suits do
+				local suit = suits[j]
+				if cards.is_suit(card_name, suit) then
+					cards_to_discard[#cards_to_discard + 1] = card_name
+					table.remove(self.stack, i)
+					break
+				end
+			end
+		end
+
+		local discard_position_left = go.get_position("/discard-position-left")
+		local discard_position_right = go.get_position("/discard-position-right")
+		
+		for i = 1, #cards_to_discard do
+			local card_name = cards_to_discard[i]
+			local card = create_card_object(card_name, false)
+			local card_destination_position
+			if #cards_to_discard > 1 then
+				card_destination_position = vmath.lerp((i - 1) / (#cards_to_discard - 1), discard_position_left, discard_position_right)
+			else
+				card_destination_position = vmath.lerp(0.5, discard_position_left, discard_position_right)
+			end
+			go.animate(msg.url(nil, card, nil), "position", go.PLAYBACK_ONCE_FORWARD, card_destination_position, go.EASING_INOUTCUBIC, 0.4, (i - 1) * 0.2, function()
+				msg.post(msg.url(nil, card, nil), "show_front")
+				timer.delay(1, false, function()
+					msg.post(msg.url(nil, card, nil), "dissolve")
+				end)
 			end)
 		end
 	end

@@ -1,6 +1,9 @@
 local characters = {}
 
 local function add_character(name, health_points, skills)
+	for i = 1, #skills do
+		skills[i] = hash(skills[i])
+	end
 	local character = {
 		name = name,
 		health_points = health_points,
@@ -10,20 +13,21 @@ local function add_character(name, health_points, skills)
 end
 
 add_character("Player", 100, {
-	hash("balance"),
-	hash("trick"),
-	hash("choose"),
-	hash("half"),
-	hash("refresh"),
-	hash("aristocracy")
+	--"balance",
+	"opportunity",
+	"trick",
+	"choose",
+	"half",
+	"refresh",
+	"aristocracy"
 })
 add_character("Enemy", 100, {
-	hash("aristocracy"),
-	hash("refresh"),
-	hash("choose"),
-	hash("half"),
-	hash("knife"),
-	hash("trick"),
+	"aristocracy",
+	"refresh",
+	"choose",
+	"half",
+	"knife",
+	"trick",
 })
 
 return characters

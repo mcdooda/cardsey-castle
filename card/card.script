@@ -3,11 +3,14 @@ local cards = require("card.cards")
 go.property("card_name", hash("red-joker"))
 go.property("showing_front", false)
 go.property("character", msg.url("/player/character"))
+go.property("is_in_hand", true)
 
 local turn_animation_duration = 0.4
 
 function init(self)
-	msg.post(self.character, "add_card", { card_id = msg.url(".") })
+	if self.is_in_hand then
+		msg.post(self.character, "add_card", { card_id = msg.url(".") })
+	end
 	self.initial_scale = go.get_scale()
 	self.animating = false
 	self.showing_front = false
@@ -30,6 +33,21 @@ local function show_front(self, done)
 			self.animating = false
 		end)
 	end)
+end
+
+local function dissolve(self)
+	local dissolve_duration = 1
+	go.animate("#sprite", "dissolve_progression.x", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_LINEAR, dissolve_duration, 0, function()
+		go.delete()
+	end)
+	
+	local random_position_deviation = 30
+	local position = go.get_position() + vmath.vector3(math.random() * random_position_deviation * 2 - random_position_deviation, math.random() * random_position_deviation * 2 - random_position_deviation, 0)
+	go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_INSINE, dissolve_duration)
+
+	local random_deviation = 20
+	local euler_z = math.random() * random_deviation * 2 - random_deviation
+	go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, euler_z, go.EASING_INSINE, dissolve_duration)
 end
 
 local function find_skill_index(skills, skill)
@@ -81,6 +99,8 @@ function on_message(self, message_id, message, sender)
 		else
 			msg.post("#cards-collision", "enable")
 		end
+	elseif message_id == hash("dissolve") then
+		dissolve(self)
 	end
 	
 	if self.animating then

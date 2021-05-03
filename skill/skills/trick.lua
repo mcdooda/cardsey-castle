@@ -10,6 +10,7 @@ skill.requirements = "Face down cards only"
 skill.color = skill_colors.neutral_gray
 
 function skill:can_play_card(card_name)
+	-- card name is unknown (nil) if face down
 	return not card_name
 end
 

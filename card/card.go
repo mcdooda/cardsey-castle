@@ -18,7 +18,7 @@ embedded_components {
   type: "sprite"
   data: "tile_set: \"/assets/cards/card-atlas.atlas\"\n"
   "default_animation: \"back\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
+  "material: \"/card/dissolve/dissolve-0.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {

@@ -136,8 +136,12 @@ function cards.is_ace(card_name)
 end
 
 -- suit
+function cards.get_suit(card_name)
+	return all_cards[card_name].suit
+end
+
 function cards.is_suit(card_name, suit)
-	return all_cards[card_name].suit == suit
+	return cards.get_suit(card_name) == suit
 end
 
 function cards.is_hearts(card_name)

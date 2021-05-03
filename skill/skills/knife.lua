@@ -5,7 +5,7 @@ local skill_colors = require("skill.skill_colors")
 local skill = {}
 
 skill.name = "Twist the knife"
-skill.description = "Destroy a face-up card from the opponent's hand"
+skill.description = "Discard a face-up card from the opponent's hand"
 skill.requirements = ""
 skill.color = skill_colors.damage
 
@@ -18,7 +18,7 @@ function skill:prepare(card_name, showing_front, card_player_url, opponent_url, 
 end
 
 function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
-	skill_character_helpers.destroy_faceup_card(opponent_url)
+	skill_character_helpers.discard_faceup_card(opponent_url)
 end
 
 return skill

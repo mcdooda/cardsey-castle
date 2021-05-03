@@ -310,3 +310,43 @@ embedded_instances {
     z: 1.0
   }
 }
+embedded_instances {
+  id: "discard-position-left"
+  data: ""
+  position {
+    x: 120.0
+    y: 568.0
+    z: 0.7
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "discard-position-right"
+  data: ""
+  position {
+    x: 520.0
+    y: 568.0
+    z: 0.8
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
