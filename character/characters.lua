@@ -13,21 +13,20 @@ local function add_character(name, health_points, skills)
 end
 
 add_character("Player", 100, {
-	--"balance",
-	"opportunity",
-	"trick",
-	"choose",
-	"half",
-	"refresh",
-	"aristocracy"
+	"golden_opportunity",
+	"trick_or_treat",
+	"choose_your_weapon",
+	"half_measures",
+	"refresh_memory",
+	"codfish_aristocracy",
 })
 add_character("Enemy", 100, {
-	"aristocracy",
-	"refresh",
-	"choose",
-	"half",
-	"knife",
-	"trick",
+	"codfish_aristocracy",
+	"refresh_memory",
+	"choose_your_weapon",
+	"half_measures",
+	"twist_the_knife",
+	"trick_or_treat",
 })
 
 return characters

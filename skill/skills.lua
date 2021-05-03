@@ -4,16 +4,16 @@ local function add_skill(name, module)
 	skills[hash(name)] = module
 end
 
-add_skill("balance",     require("skill.skills.balance"))
-add_skill("refresh",     require("skill.skills.refresh"))
-add_skill("trick",       require("skill.skills.trick"))
-add_skill("choose",      require("skill.skills.choose"))
-add_skill("half",        require("skill.skills.half"))
-add_skill("aristocracy", require("skill.skills.aristocracy"))
-add_skill("knife",       require("skill.skills.knife"))
-add_skill("opportunity", require("skill.skills.opportunity"))
+add_skill("balance_is_the_key",  require("skill.skills.balance_is_the_key"))
+add_skill("refresh_memory",      require("skill.skills.refresh_memory"))
+add_skill("trick_or_treat",      require("skill.skills.trick_or_treat"))
+add_skill("choose_your_weapon",  require("skill.skills.choose_your_weapon"))
+add_skill("half_measures",       require("skill.skills.half_measures"))
+add_skill("codfish_aristocracy", require("skill.skills.codfish_aristocracy"))
+add_skill("twist_the_knife",     require("skill.skills.twist_the_knife"))
+add_skill("golden_opportunity",  require("skill.skills.golden_opportunity"))
+add_skill("here_goes_nothing",   require("skill.skills.here_goes_nothing"))
 
 add_skill("unplayable",  require("skill.skills.unplayable"))
-add_skill("nothing",     require("skill.skills.nothing"))
 
 return skills
