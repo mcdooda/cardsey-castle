@@ -31,6 +31,6 @@ void main()
 {
 	vec4 color = texture2D(texture_sampler, var_texcoord0.xy);
 	float alpha = color.a;
-	alpha = min(alpha, 2.0 + noise(var_texcoord0.xy * 15) - dissolve_progression.x * 3.0);
+	alpha = min(alpha, 2.0 + noise(var_texcoord0.xy * 15.0) - dissolve_progression.x * 3.0);
 	gl_FragColor = vec4(color.rgb * alpha, alpha);
 }
