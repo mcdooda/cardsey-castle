@@ -13,7 +13,7 @@ local function add_character(name, health_points, skills)
 end
 
 add_character("Player", 100, {
-	"golden_opportunity",
+	"face_value",
 	"trick_or_treat",
 	"choose_your_weapon",
 	"half_measures",
