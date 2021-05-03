@@ -38,13 +38,18 @@ local function discard_stack_cards_of_suits(character_url, suits)
 	post_skill(character_url, "discard_stack_cards_of_suits", { suits = suits })
 end
 
+local function discard_stack_cards_of_lesser_value(character_url, max_value)
+	post_skill(character_url, "discard_stack_cards_of_lesser_value", { max_value = max_value })
+end
+
 return {
-	get_health_points           = get_health_points,
-	set_health_points           = set_health_points,
-	deal_damage                 = deal_damage,
-	heal                        = heal,
-	draw                        = draw,
-	reload_used_skill           = reload_used_skill,
-	discard_faceup_card         = discard_faceup_card,
-	discard_stack_cards_of_suits = discard_stack_cards_of_suits,
+	get_health_points                   = get_health_points,
+	set_health_points                   = set_health_points,
+	deal_damage                         = deal_damage,
+	heal                                = heal,
+	draw                                = draw,
+	reload_used_skill                   = reload_used_skill,
+	discard_faceup_card                 = discard_faceup_card,
+	discard_stack_cards_of_suits        = discard_stack_cards_of_suits,
+	discard_stack_cards_of_lesser_value = discard_stack_cards_of_lesser_value,
 }

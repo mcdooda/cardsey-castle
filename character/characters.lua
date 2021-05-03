@@ -14,7 +14,7 @@ end
 
 add_character("Player", 100, {
 	"face_value",
-	"trick_or_treat",
+	"value_of_nothing",
 	"choose_your_weapon",
 	"half_measures",
 	"refresh_memory",

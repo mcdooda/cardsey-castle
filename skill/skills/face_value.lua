@@ -5,7 +5,7 @@ local skill_colors = require("skill.skill_colors")
 local skill = {}
 
 skill.name = "Face value"
-skill.description = "Discards all cards from the given suit from your stack"
+skill.description = "Discard all cards from the given suit from your stack"
 skill.requirements = "Faces only"
 skill.color = skill_colors.heal
 

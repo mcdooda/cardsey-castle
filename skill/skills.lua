@@ -14,6 +14,7 @@ add_skill("twist_the_knife",     require("skill.skills.twist_the_knife"))
 add_skill("golden_opportunity",  require("skill.skills.golden_opportunity"))
 add_skill("here_goes_nothing",   require("skill.skills.here_goes_nothing"))
 add_skill("face_value",          require("skill.skills.face_value"))
+add_skill("value_of_nothing",    require("skill.skills.value_of_nothing"))
 
 add_skill("unplayable",  require("skill.skills.unplayable"))
 

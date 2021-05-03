@@ -4,13 +4,13 @@ local skill_colors = require("skill.skill_colors")
 
 local skill = {}
 
-skill.name = "Golden Opportunity"
-skill.description = "Discard all cards from the given suit from your stack"
-skill.requirements = ""
+skill.name = "Value of nothing"
+skill.description = "Discard lower value cards from your stack"
+skill.requirements = "Numbers only"
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)
-	return true
+	return card_name and (cards.is_joker(card_name) or cards.is_number(card_name))
 end
 
 function skill:prepare(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
@@ -18,19 +18,13 @@ function skill:prepare(card_name, showing_front, card_player_url, opponent_url, 
 end
 
 function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
-	local suits_to_discard
+	local max_value = 0
 	if cards.is_joker(card_name) then
-		if cards.is_red(card_name) then
-			suits_to_discard = { cards.hearts, cards.diamonds }
-		else
-			assert(cards.is_black(card_name))
-			suits_to_discard = { cards.clover, cards.pikes }
-		end
+		max_value = 15
 	else
-		suits_to_discard = { cards.get_suit(card_name) }
+		max_value = cards.get_value(card_name)
 	end
-	assert(suits_to_discard and #suits_to_discard > 0)
-	skill_character_helpers.discard_stack_cards_of_suits(card_player_url, suits_to_discard)
+	skill_character_helpers.discard_stack_cards_of_lesser_value(card_player_url, max_value)
 end
 
 return skill

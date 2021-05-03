@@ -6,7 +6,7 @@ go.property("used", false)
 local skills = require("skill.skills")
 
 function init(self)
-	self.skill = assert(skills[self.skill_name], "cannot find card " .. tostring(self.skill_name))
+	self.skill = assert(skills[self.skill_name], "cannot find skill " .. tostring(self.skill_name))
 	label.set_text("#name-label", self.skill.name)
 	label.set_text("#requirements-label", self.skill.requirements)
 	label.set_text("#description-label", self.skill.description)
