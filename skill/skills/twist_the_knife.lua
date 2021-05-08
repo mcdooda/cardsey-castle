@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Twist the knife"
 skill.description = "Discard a face-up card from the opponent's hand"
-skill.requirements = ""
+skill.requirements = {""}
 skill.color = skill_colors.damage
 
 function skill:can_play_card(card_name)

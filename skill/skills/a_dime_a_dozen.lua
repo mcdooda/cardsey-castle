@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "A dime a dozen"
 skill.description = "Draw 12 cards"
-skill.requirements = "Aces only"
+skill.requirements = {"Aces only"}
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)

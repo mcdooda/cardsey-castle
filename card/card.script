@@ -1,11 +1,12 @@
 local cards = require("card.cards")
+local card_animation = require("card.card_animation")
 
 go.property("card_name", hash("red-joker"))
+go.property("initial_scale", vmath.vector3())
+go.property("animating", false)
 go.property("showing_front", false)
 go.property("character", msg.url("/player/character"))
 go.property("is_in_hand", true)
-
-local turn_animation_duration = 0.4
 
 function init(self)
 	if self.is_in_hand then
@@ -14,25 +15,8 @@ function init(self)
 	self.initial_scale = go.get_scale()
 	self.animating = false
 	self.showing_front = false
-	self.skills = {}
+	self.overlapping_card_slots = {}
 	self.card_name_string = cards.get_string(self.card_name)
-end
-
-local function show_front(self, done)
-	assert(not self.animating)
-	self.animating = true
-	go.animate(".", "scale", go.PLAYBACK_ONCE_FORWARD, self.initial_scale * 1.2, go.EASING_INSINE, turn_animation_duration * 0.5)
-	go.animate("#sprite", "scale.x", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INSINE, turn_animation_duration * 0.5, 0, function()
-		sprite.play_flipbook("#sprite", self.card_name_string)
-		self.showing_front = true
-		go.animate(".", "scale", go.PLAYBACK_ONCE_FORWARD, self.initial_scale, go.EASING_OUTSINE, turn_animation_duration * 0.5)
-		go.animate("#sprite", "scale.x", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_OUTSINE, turn_animation_duration * 0.5, 0, function()
-			if done then
-				done()
-			end
-			self.animating = false
-		end)
-	end)
 end
 
 local function dissolve(self)
@@ -50,9 +34,9 @@ local function dissolve(self)
 	go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, euler_z, go.EASING_INSINE, dissolve_duration)
 end
 
-local function find_skill_index(skills, skill)
+local function find_index_for_card_slot(skills, skill_id, card_slot_index)
 	for i = 1, #skills do
-		if skills[i] == skill then
+		if skills[i].skill_id == skill_id and skills[i].card_slot_index == card_slot_index then
 			return i
 		end
 	end
@@ -63,38 +47,24 @@ function on_message(self, message_id, message, sender)
 		if not self.showing_front then
 			msg.post(".", "show_front")
 		end
-	elseif message_id == hash("entered_skill") then
-		assert(not find_skill_index(self.skills, message.skill_id))
-		self.skills[#self.skills + 1] = message.skill_id
-	elseif message_id == hash("left_skill") then
-		local skill_index = assert(find_skill_index(self.skills, message.skill_id), "Cannot find skill " .. tostring(message.skill_id))
-		table.remove(self.skills, skill_index)
+	elseif message_id == hash("entered_skill_card_slot") then
+		assert(not find_index_for_card_slot(self.overlapping_card_slots, message.skill_id, message.card_slot_index))
+		self.overlapping_card_slots[#self.overlapping_card_slots + 1] = {
+			skill_id = message.skill_id,
+			card_slot_index = message.card_slot_index
+		}
+	elseif message_id == hash("left_skill_card_slot") then
+		local index = assert(find_index_for_card_slot(self.overlapping_card_slots, message.skill_id, message.card_slot_index), "Cannot find skill " .. tostring(message.skill_id) .. " ; card slot index " .. tostring(message.card_slot_index))
+		table.remove(self.overlapping_card_slots, index)
 	elseif message_id == hash("drag") then
 		msg.post("#cards-collision", "disable")
 	elseif message_id == hash("drop") then
-		if #self.skills == 1 then
-			local skill = self.skills[1]
-			local skill_position = go.get_position(skill)
-			local card_position = go.get_position()
-			local position = vmath.vector3()
-			position.x = skill_position.x
-			position.y = skill_position.y
-			position.z = card_position.z
-			go.animate(".", "euler.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTQUINT, 0.3)
-			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_OUTQUINT, 0.3, 0, function()
-				local function set_parent_execute()
-					go.set_parent(msg.url("."), skill, true)
-					msg.post(skill, "execute_skill", { card_id = msg.url(".") })
-				end
-				if self.showing_front then
-					set_parent_execute()
-				else
-					show_front(self, function()
-						timer.delay(0.5, false, set_parent_execute)
-					end)
-				end
-			end)
-		elseif #self.skills > 1 then
+		if #self.overlapping_card_slots == 1 then
+			local card_slot = self.overlapping_card_slots[1]
+			local skill_id = card_slot.skill_id
+			local card_slot_index = card_slot.card_slot_index
+			msg.post(card_slot.skill_id, "drop_card_on_slot", { card_id = msg.url("."), card_slot_index = card_slot_index })
+		elseif #self.overlapping_card_slots > 1 then
 			msg.post(".", "drop") -- try again
 		else
 			msg.post("#cards-collision", "enable")
@@ -107,7 +77,7 @@ function on_message(self, message_id, message, sender)
 		return
 	end
 	if message_id == hash("show_front") then
-		show_front(self)
+		card_animation.show_front(".")
 	end
 end
 

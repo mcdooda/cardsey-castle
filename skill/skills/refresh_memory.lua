@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Refresh memory"
 skill.description = "Refresh a used skill"
-skill.requirements = "Diamonds only"
+skill.requirements = {"Diamonds only"}
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)

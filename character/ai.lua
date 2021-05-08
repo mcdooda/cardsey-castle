@@ -37,11 +37,14 @@ local function find_best_move(self)
 			else
 				has_facedown_cards = true
 			end
-			if skill:can_play_card(card_name) then
-				skill_card_matches[#skill_card_matches + 1] = {
-					skill_id = skill_id,
-					card_id = card_id
-				}
+			for k = 1, #skill.requirements do
+				if skill:can_play_card(card_name, k) then
+					skill_card_matches[#skill_card_matches + 1] = {
+						skill_id = skill_id,
+						card_id = card_id,
+						card_slot_index = k
+					}
+				end
 			end
 		end
 	end
@@ -60,12 +63,13 @@ local function find_best_move(self)
 	return skill_card_matches[random_combination_index]
 end
 
-local function play_skill(skill_id, card_id)
+local function play_skill(skill_id, card_id, card_slot_index)
 	local card = msg.url(nil, card_id.path, nil)
 	msg.post(card, "drag")
 
 	local skill = msg.url(nil, skill_id.path, nil)
 	local skill_position = go.get_position(skill)
+	assert(card_slot_index == 1, "multiple slots not supported yet!!")
 	go.animate(card, "position.x", go.PLAYBACK_ONCE_FORWARD, skill_position.x, go.EASING_INBACK, 0.4)
 	go.animate(card, "position.y", go.PLAYBACK_ONCE_FORWARD, skill_position.y, go.EASING_INBACK, 0.4, 0, function()
 		msg.post(card, "drop")

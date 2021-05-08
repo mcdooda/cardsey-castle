@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Golden Opportunity"
 skill.description = "Discard all cards from the given suit from your stack"
-skill.requirements = ""
+skill.requirements = {""}
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)

@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Face value"
 skill.description = "Discard all cards from the given suit from your stack"
-skill.requirements = "Faces only"
+skill.requirements = {"Faces only"}
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)

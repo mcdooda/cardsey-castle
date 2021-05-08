@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Balance is the key"
 skill.description = "Balance health points"
-skill.requirements = "Jokers only"
+skill.requirements = {"Jokers only"}
 skill.color = skill_colors.neutral_gray
 
 function skill:can_play_card(card_name)

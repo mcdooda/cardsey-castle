@@ -1,5 +1,6 @@
 local characters = require("character.characters")
 local ai = require("character.ai")
+local skills = require("skill.skills")
 
 go.property("name", hash("Player"))
 go.property("is_player", true)
@@ -100,7 +101,9 @@ local function add_skill(self, skill_name, position)
 			opponent = get_opponent_url(self)
 		}
 	}
-	local ids = collectionfactory.create("#skill-collection-factory", position, nil, properties)
+	local skill = skills[skill_name]
+	local collection_factory_url = #skill.requirements > 1 and "#skill-pair-collection-factory" or "#skill-simple-collection-factory"
+	local ids = collectionfactory.create(collection_factory_url, position, nil, properties)
 	local skill_url = msg.url(nil, ids[hash("/skill")], nil)
 	self.skills[#self.skills + 1] = {
 		ids = ids,
@@ -117,9 +120,17 @@ end
 local function start_turn(self)
 	assert(not self.is_current_turn)
 	self.is_current_turn = true
+	local skill_number = 1
 	for i = 1, #self.character.skills do
 		local skill_name = self.character.skills[i]
-		local skill_position = go.get_position("/skill-position-" .. tostring(i))
+		local skill = skills[skill_name]
+		local skill_position_url
+		if #skill.requirements > 1 then
+			skill_position_url = "/skill-pair-position-" .. tostring(math.floor((skill_number + 1) / 2))
+		else
+			skill_position_url = "/skill-position-" .. tostring(skill_number)
+		end
+		local skill_position = go.get_position(skill_position_url)
 		local x
 		if self.is_player then
 			x = skill_position.x + 1600
@@ -128,6 +139,12 @@ local function start_turn(self)
 		end
 		local skill_url = add_skill(self, skill_name, skill_position)
 		go.animate(skill_url, "position.x", go.PLAYBACK_ONCE_BACKWARD, x, go.EASING_INBACK, 0.8)
+
+		if #skill.requirements > 1 then
+			skill_number = skill_number + 2
+		else
+			skill_number = skill_number + 1
+		end
 	end
 	local draw_amount = max_card_draw - self.cards_count
 	if draw_amount < 1 then
@@ -249,7 +266,7 @@ function on_message(self, message_id, message, sender)
 						msg.post(".", "play_ai_turn")
 					end)
 				else
-					ai.play_skill(best_move.skill_id, best_move.card_id)
+					ai.play_skill(best_move.skill_id, best_move.card_id, best_move.card_slot_index)
 				end
 			else
 				msg.post(".", "end_turn")

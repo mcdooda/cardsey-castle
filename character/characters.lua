@@ -17,8 +17,9 @@ add_character("Player", 100, {
 	"value_of_nothing",
 	"choose_your_weapon",
 	"half_measures",
-	"refresh_memory",
-	"codfish_aristocracy",
+	--"refresh_memory",
+	--"codfish_aristocracy",
+	"it_takes_two_to_tango",
 })
 add_character("Enemy", 100, {
 	"codfish_aristocracy",

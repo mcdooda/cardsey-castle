@@ -1,3 +1,5 @@
+local card_animation = require("card.card_animation")
+
 go.property("skill_name", hash("test_skill_1"))
 go.property("card_player", msg.url())
 go.property("opponent", msg.url())
@@ -8,7 +10,12 @@ local skills = require("skill.skills")
 function init(self)
 	self.skill = assert(skills[self.skill_name], "cannot find skill " .. tostring(self.skill_name))
 	label.set_text("#name-label", self.skill.name)
-	label.set_text("#requirements-label", self.skill.requirements)
+	for i = 1, #self.skill.requirements do
+		label.set_text("#requirements-label-" .. tostring(i), self.skill.requirements[i])
+	end
+
+	self.card_id_per_slot = {}
+	
 	label.set_text("#description-label", self.skill.description)
 	self.initial_y = go.get_position().y
 
@@ -26,14 +33,14 @@ function init(self)
 	msg.post("skill-outline", "disable")
 end
 
-local function can_play_card(self, card)
+local function can_play_card(self, card, card_slot_index)
 	local card_script_url = msg.url(nil, card, "card")
 	local card_name
 	local showing_front = go.get(card_script_url, "showing_front")
 	if showing_front then
 		card_name = go.get(card_script_url, "card_name")
 	end
-	return self.skill:can_play_card(card_name)
+	return self.skill:can_play_card(card_name, card_slot_index)
 end
 
 local function prepare_skill(self, card, decision)
@@ -62,25 +69,66 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") then
 		local card = message.other_id
 		if go.get(msg.url(nil, card, "card"), "character") == self.card_player then
+			local card_slot_collision_group_to_index = {
+				[hash("skill-slot-1")] = 1,
+				[hash("skill-slot-2")] = 2,
+			}
+			local card_slot_index = assert(card_slot_collision_group_to_index[message.own_group], "No card slot for collision group " .. tostring(message.own_group))
 			if message.enter then
-				if can_play_card(self, card) then
-					--print("entered_skill", self.skill_name, go.get(msg.url(nil, card, "card"), "card_name"))
-					msg.post(card, "entered_skill", { skill_id = msg.url(".") })
-					--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 1, 0.4, 1))
+				if can_play_card(self, card, card_slot_index) then
+					msg.post(card, "entered_skill_card_slot", { skill_id = msg.url("."), card_slot_index = card_slot_index })
 					msg.post("skill-outline", "set_color", { color = vmath.vector4(1, 1, 1, 0) })
 				else
 					if go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
 						shake(self)
 					end
-					--go.set("skill-background#rectangle", "color", vmath.vector4(1, 0.4, 0.4, 1))
 				end
 			else
-				if can_play_card(self, card) then
-					--print("left_skill", self.skill_name, go.get(msg.url(nil, card, "card"), "card_name"))
-					msg.post(message.other_id, "left_skill", { skill_id = msg.url(".") })
+				if can_play_card(self, card, card_slot_index) then
+					msg.post(message.other_id, "left_skill_card_slot", { skill_id = msg.url("."), card_slot_index = card_slot_index })
 					msg.post("skill-outline", "clear")
+					self.card_id_per_slot[card_slot_index] = nil
 				end
-				--go.set("skill-background#rectangle", "color", vmath.vector4(0.4, 0.74, 1, 1))
+			end
+		end
+	elseif message_id == hash("drop_card_on_slot") then
+		local card_id = message.card_id
+		local card_slot_index = message.card_slot_index
+
+		local skill_position = go.get_position()
+		local card_position = go.get_position(card_id)
+		local position = vmath.vector3()
+		position.x = skill_position.x + ((card_slot_index - 1) - (#self.skill.requirements - 1) * 0.5) * 160 * 0.9
+		position.y = skill_position.y
+		position.z = skill_position.z + 0.02
+		go.animate(card_id, "euler.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTQUINT, 0.3)
+		go.animate(card_id, "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_OUTQUINT, 0.3, 0, function()
+			local function set_parent_drop()
+				go.set_parent(card_id, ".", true)
+				msg.post(".", "card_dropped_on_slot", message)
+			end
+			if go.get(msg.url(nil, card_id.path, "card"), "showing_front") then
+				set_parent_drop()
+			else
+				card_animation.show_front(card_id, function()
+					timer.delay(0.5, false, set_parent_drop)
+				end)
+			end
+		end)
+	elseif message_id == hash("card_dropped_on_slot") then
+		local card_id = message.card_id
+		local card_slot_index = message.card_slot_index
+		if not self.card_id_per_slot[card_slot_index] then
+			self.card_id_per_slot[card_slot_index] = card_id
+			local num_played_slots = 0
+			for i = 1, #self.skill.requirements do
+				if self.card_id_per_slot[i] then
+					num_played_slots = num_played_slots + 1
+				end
+			end
+			assert(num_played_slots <= #self.skill.requirements)
+			if num_played_slots == #self.skill.requirements then
+				msg.post(".", "execute_skill", { card_id = card_id })
 			end
 		end
 	elseif message_id == hash("execute_skill") then
@@ -88,12 +136,12 @@ function on_message(self, message_id, message, sender)
 			return
 		end
 		self.used = true
-		local card = message.card_id
-		msg.post(msg.url(nil, card.path, "collisionobject"), "disable")
-		msg.post(msg.url(nil, card.path, "cards-collision"), "disable")
+		local card_id = message.card_id
+		msg.post(msg.url(nil, card_id.path, "collisionobject"), "disable")
+		msg.post(msg.url(nil, card_id.path, "cards-collision"), "disable")
 		
 		local decision = {}
-		local target_character = prepare_skill(self, card, decision)
+		local target_character = prepare_skill(self, card_id, decision)
 		
 		local y
 		if go.get(msg.url(nil, target_character.path, "character"), "is_player") then
@@ -102,8 +150,8 @@ function on_message(self, message_id, message, sender)
 			y = self.initial_y + 1600
 		end
 		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, y, go.EASING_INBACK, 0.4, 0, function()
-			execute_skill(self, card, decision)
-			msg.post(self.card_player, "remove_card", { card_id = card })
+			execute_skill(self, card_id, decision)
+			msg.post(self.card_player, "remove_card", { card_id = card_id })
 
 			if not go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
 				timer.delay(1, false, function()
@@ -116,6 +164,7 @@ function on_message(self, message_id, message, sender)
 			return
 		end
 		self.used = false
+		self.card_id_per_slot = {}
 		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, self.initial_y, go.EASING_INBACK, 0.4)
 	end
 end

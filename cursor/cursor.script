@@ -31,8 +31,8 @@ function on_message(self, message_id, message, sender)
 				local card_character = go.get(msg.url(nil, clicked_card, "card"), "character")
 					if go.get(msg.url(nil, card_character.path, "character"), "is_player") then
 					self.card = message.other_id
-					local position = go.get_position()
-					local card_position = go.get_position(self.card)
+					local position = go.get_world_position()
+					local card_position = go.get_world_position(self.card)
 					self.card_relative_position = {
 						x = card_position.x - position.x,
 						y = card_position.y - position.y
@@ -71,8 +71,10 @@ function on_input(self, action_id, action)
 			local diff_y = position.y - action.y
 			if math.sqrt(diff_x * diff_x + diff_y * diff_y) >= 5 and self.card then
 				self.moved = true
+				go.set_parent(self.card, nil, true)
 			end
 			if self.moved then
+				go.set_parent(self.card, nil, true)
 				go.set_position(vmath.vector3(action.x, action.y, 0))
 			end
 			if not already_moved and self.moved and self.card then

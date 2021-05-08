@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Here goes nothing"
 skill.description = "Only throws the card away"
-skill.requirements = ""
+skill.requirements = {""}
 skill.color = skill_colors.neutral
 
 function skill:can_play_card(card_name)

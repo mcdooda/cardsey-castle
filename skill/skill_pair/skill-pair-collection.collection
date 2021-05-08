@@ -14,28 +14,8 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 240.0
+    x: 500.0
     y: 240.0
-    z: 1.0
-  }
-}
-instances {
-  id: "skill"
-  prototype: "/skill/skill.go"
-  position {
-    x: 0.0
-    y: -17.0
-    z: 0.2
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.9
-    y: 0.9
     z: 1.0
   }
 }
@@ -62,7 +42,7 @@ instances {
     }
   }
   scale3 {
-    x: 240.0
+    x: 500.0
     y: 32.0
     z: 1.0
   }
@@ -82,8 +62,28 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 240.0
+    x: 500.0
     y: 240.0
+    z: 1.0
+  }
+}
+instances {
+  id: "skill"
+  prototype: "/skill/skill_pair/skill-pair.go"
+  position {
+    x: 0.0
+    y: -17.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.9
+    y: 0.9
     z: 1.0
   }
 }
