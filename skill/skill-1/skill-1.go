@@ -1,6 +1,6 @@
 components {
   id: "skill"
-  component: "/input/skill.script"
+  component: "/skill/skill.script"
   position {
     x: 0.0
     y: 0.0

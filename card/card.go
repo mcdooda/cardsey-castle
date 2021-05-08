@@ -45,6 +45,7 @@ embedded_components {
   "mask: \"cursor\"\n"
   "mask: \"skill-slot-1\"\n"
   "mask: \"skill-slot-2\"\n"
+  "mask: \"skill-slot-3\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

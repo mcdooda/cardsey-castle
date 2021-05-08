@@ -21,5 +21,6 @@ add_skill("face_value",            require("skill.skills.face_value"))
 add_skill("value_of_nothing",      require("skill.skills.value_of_nothing"))
 add_skill("a_dime_a_dozen",        require("skill.skills.a_dime_a_dozen"))
 add_skill("it_takes_two_to_tango", require("skill.skills.it_takes_two_to_tango"))
+add_skill("three_strikes",         require("skill.skills.three_strikes"))
 
 return skills

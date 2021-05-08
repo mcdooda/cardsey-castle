@@ -102,7 +102,7 @@ local function add_skill(self, skill_name, position)
 		}
 	}
 	local skill = skills[skill_name]
-	local collection_factory_url = #skill.requirements > 1 and "#skill-pair-collection-factory" or "#skill-simple-collection-factory"
+	local collection_factory_url = "#skill-" .. tostring(#skill.requirements) .. "-collection-factory"
 	local ids = collectionfactory.create(collection_factory_url, position, nil, properties)
 	local skill_url = msg.url(nil, ids[hash("/skill")], nil)
 	self.skills[#self.skills + 1] = {

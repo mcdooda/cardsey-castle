@@ -72,6 +72,7 @@ function on_message(self, message_id, message, sender)
 			local card_slot_collision_group_to_index = {
 				[hash("skill-slot-1")] = 1,
 				[hash("skill-slot-2")] = 2,
+				[hash("skill-slot-3")] = 3,
 			}
 			local card_slot_index = assert(card_slot_collision_group_to_index[message.own_group], "No card slot for collision group " .. tostring(message.own_group))
 			if message.enter then

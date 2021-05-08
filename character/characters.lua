@@ -19,7 +19,8 @@ add_character("Player", 100, {
 	"half_measures",
 	--"refresh_memory",
 	--"codfish_aristocracy",
-	"it_takes_two_to_tango",
+	--"it_takes_two_to_tango",
+	"three_strikes",
 })
 add_character("Enemy", 100, {
 	"codfish_aristocracy",
