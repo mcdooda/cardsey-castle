@@ -20,13 +20,13 @@ add_character("Player", 100, {
 	"labour_of_love",
 })
 
-add_character("Enemy", 200, {
-	"anti_conformism",
+add_character("Enemy", 100, {
+	"choose_your_weapon",
+	"choose_your_weapon",
+	"choose_your_weapon",
+	"choose_your_weapon",
 	"refresh_memory",
-	"choose_your_weapon",
-	"choose_your_weapon",
-	"choose_your_weapon",
-	"choose_your_weapon",
+	"anti_conformism",
 })
 
 return characters

@@ -7,7 +7,7 @@ local skill = {}
 skill.name = "Anti-conformism"
 skill.description = "Discard a face-up face card from the opponent's hand"
 skill.requirements = {"Number"}
-skill.color = skill_colors.damage
+skill.color = skill_colors.discard_opponent
 
 function skill:can_play_card(card_name)
 	return card_name and (cards.is_joker(card_name) or cards.is_number(card_name))

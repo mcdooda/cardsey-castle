@@ -221,7 +221,7 @@ embedded_components {
   "  z: 0.0\n"
   "  w: 1.0\n"
   "}\n"
-  "leading: 1.0\n"
+  "leading: 0.7\n"
   "tracking: 0.0\n"
   "pivot: PIVOT_CENTER\n"
   "blend_mode: BLEND_MODE_ALPHA\n"

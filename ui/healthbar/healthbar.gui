@@ -29,21 +29,21 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 26.0
+    x: 202.0
+    y: 28.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.90588236
-    y: 0.29803923
-    z: 0.23529412
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
     w: 1.0
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
-  id: "healthbar-red"
+  id: "healthbar-border"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
@@ -65,7 +65,62 @@ nodes {
 }
 nodes {
   position {
+    x: 1.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
     x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 26.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.90588236
+    y: 0.29803923
+    z: 0.23529412
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: ""
+  id: "healthbar-red"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_W
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "healthbar-border"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 1.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -102,6 +157,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
+  parent: "healthbar-border"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -119,7 +175,7 @@ nodes {
 }
 nodes {
   position {
-    x: 100.0
+    x: 101.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -170,6 +226,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
+  parent: "healthbar-border"
   layer: ""
   inherit_alpha: true
   alpha: 1.0

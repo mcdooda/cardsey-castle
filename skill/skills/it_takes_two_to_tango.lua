@@ -5,7 +5,7 @@ local skill_colors = require("skill.skill_colors")
 local skill = {}
 
 skill.name = "It takes two to tango"
-skill.description = "Deal 50 damage"
+skill.description = "Deal 25 damage"
 skill.requirements = {"Queen", "King"}
 skill.color = skill_colors.damage
 
@@ -23,7 +23,7 @@ function skill:prepare(cards_data, card_player_url, opponent_url, skill_id, deci
 end
 
 function skill:execute(cards_data, card_player_url, opponent_url, skill_id, decision)
-	skill_character_helpers.deal_damage(opponent_url, 50)
+	skill_character_helpers.deal_damage(opponent_url, 25)
 end
 
 return skill

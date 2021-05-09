@@ -5,7 +5,7 @@ local skill_colors = require("skill.skill_colors")
 local skill = {}
 
 skill.name = "Labour of love"
-skill.description = "Heal"
+skill.description = "Heal 40. Refresh a used skill"
 skill.requirements = {"Jack"}
 skill.color = skill_colors.heal
 
@@ -18,7 +18,8 @@ function skill:prepare(cards_data, card_player_url, opponent_url, skill_id, deci
 end
 
 function skill:execute(cards_data, card_player_url, opponent_url, skill_id, decision)
-	skill_character_helpers.heal(card_player_url, 20)
+	skill_character_helpers.heal(card_player_url, 40)
+	skill_character_helpers.reload_used_skill(card_player_url, skill_id)
 end
 
 return skill

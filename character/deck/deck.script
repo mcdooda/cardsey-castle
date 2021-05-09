@@ -3,8 +3,14 @@ go.property("is_player_deck", true)
 local cards = require("card.cards")
 local card_animation = require("card.card_animation")
 
+local function update_card_count_labels(self)
+	label.set_text("#count-enemy", tostring(#self.stack))
+	label.set_text("#count-player", tostring(#self.stack))
+end
+
 function init(self)
 	self.stack = cards.init_stack()
+	update_card_count_labels(self)
 end
 
 local function create_card_object(card_name, is_in_hand)
@@ -32,6 +38,7 @@ local function discard_cards_from_stack(self, predicate)
 		if predicate(card_name) then
 			cards_to_discard[#cards_to_discard + 1] = card_name
 			table.remove(self.stack, i)
+			update_card_count_labels(self)
 		end
 	end
 
@@ -59,6 +66,7 @@ end
 local function shuffle_card_into_stack(self, card_name)
 	local random_index = math.random(1, #self.stack + 1)
 	table.insert(self.stack, random_index, card_name)
+	update_card_count_labels(self)
 end
 
 function on_message(self, message_id, message, sender)
@@ -75,6 +83,7 @@ function on_message(self, message_id, message, sender)
 		for i = 1, amount do
 			local top_card_name = self.stack[#self.stack]
 			self.stack[#self.stack] = nil
+			update_card_count_labels(self)
 			local card = create_card_object(top_card_name, true)
 			go.animate(msg.url(nil, card, nil), "position.x", go.PLAYBACK_ONCE_FORWARD, card_destination_position.x, go.EASING_INOUTCUBIC, 0.4, (i - 1) * 0.2)
 			go.animate(msg.url(nil, card, nil), "position.y", go.PLAYBACK_ONCE_FORWARD, card_destination_position.y, go.EASING_INOUTCUBIC, 0.4, (i - 1) * 0.2, function()
@@ -121,5 +130,7 @@ function on_message(self, message_id, message, sender)
 				end)
 			end)
 		end
+	elseif message_id == hash("print_deck") then
+		pprint(self.stack)
 	end
 end
