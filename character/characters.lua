@@ -13,22 +13,20 @@ local function add_character(name, health_points, skills)
 end
 
 add_character("Player", 100, {
-	"face_value",
-	"value_of_nothing",
+	"it_takes_two_to_tango",
+	"labour_of_love",
+	"cook_the_books",
 	"choose_your_weapon",
-	"half_measures",
-	--"refresh_memory",
-	--"codfish_aristocracy",
-	--"it_takes_two_to_tango",
-	"three_strikes",
+	"choose_your_weapon",
 })
-add_character("Enemy", 100, {
-	"codfish_aristocracy",
+
+add_character("Enemy", 200, {
+	"anti_conformism",
 	"refresh_memory",
 	"choose_your_weapon",
-	"half_measures",
-	"twist_the_knife",
-	"trick_or_treat",
+	"choose_your_weapon",
+	"choose_your_weapon",
+	"choose_your_weapon",
 })
 
 return characters

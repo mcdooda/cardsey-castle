@@ -6,6 +6,10 @@ key_trigger {
   input: KEY_SPACE
   action: "draw"
 }
+key_trigger {
+  input: KEY_C
+  action: "toggle_card_skill_debug"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"

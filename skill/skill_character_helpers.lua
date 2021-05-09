@@ -30,8 +30,8 @@ local function reload_used_skill(character_url, ignore_skill_id)
 	post_skill(character_url, "reload_used_skill", { ignore_skill_id = ignore_skill_id })
 end
 
-local function discard_faceup_card(character_url)
-	post_skill(character_url, "discard_faceup_card")
+local function discard_faceup_card(character_url, values)
+	post_skill(character_url, "discard_faceup_card", { values = values })
 end
 
 local function discard_stack_cards_of_suits(character_url, suits)
@@ -40,6 +40,10 @@ end
 
 local function discard_stack_cards_of_lesser_value(character_url, max_value)
 	post_skill(character_url, "discard_stack_cards_of_lesser_value", { max_value = max_value })
+end
+
+local function shuffle_into_deck(character_url, card_ids)
+	post_skill(character_url, "shuffle_into_deck", { card_ids = card_ids })
 end
 
 return {
@@ -52,4 +56,5 @@ return {
 	discard_faceup_card                 = discard_faceup_card,
 	discard_stack_cards_of_suits        = discard_stack_cards_of_suits,
 	discard_stack_cards_of_lesser_value = discard_stack_cards_of_lesser_value,
+	shuffle_into_deck                   = shuffle_into_deck,
 }

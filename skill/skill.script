@@ -9,6 +9,7 @@ local skills = require("skill.skills")
 
 function init(self)
 	self.skill = assert(skills[self.skill_name], "cannot find skill " .. tostring(self.skill_name))
+	--label.set_text("#name-label", self.skill.name .. " (" .. msg.url(".").path .. ")")
 	label.set_text("#name-label", self.skill.name)
 	for i = 1, #self.skill.requirements do
 		label.set_text("#requirements-label-" .. tostring(i), self.skill.requirements[i])
@@ -43,18 +44,30 @@ local function can_play_card(self, card, card_slot_index)
 	return self.skill:can_play_card(card_name, card_slot_index)
 end
 
-local function prepare_skill(self, card, decision)
-	local card_script_url = msg.url(nil, card.path, "card")
-	local card_name = go.get(card_script_url, "card_name")
-	local showing_front = go.get(card_script_url, "showing_front")
-	return self.skill:prepare(card_name, showing_front, self.card_player, self.opponent, msg.url("#"), decision)
+local function get_cards_data(self)
+	local cards_data = {}
+	for i = 1, #self.card_id_per_slot do
+		local card_id = self.card_id_per_slot[i]
+		local card_script_url = msg.url(nil, card_id.path, "card")
+		local card_name = go.get(card_script_url, "card_name")
+		local showing_front = go.get(card_script_url, "showing_front")
+		cards_data[#cards_data + 1] = {
+			id = card_id,
+			name = card_name,
+			showing_front = showing_front
+		}
+	end
+	return cards_data
 end
 
-local function execute_skill(self, card, decision)
-	local card_script_url = msg.url(nil, card.path, "card")
-	local card_name = go.get(card_script_url, "card_name")
-	local showing_front = go.get(card_script_url, "showing_front")
-	self.skill:execute(card_name, showing_front, self.card_player, self.opponent, msg.url("#"), decision)
+local function prepare_skill(self, decision)
+	local cards_data = get_cards_data(self)
+	return self.skill:prepare(cards_data, self.card_player, self.opponent, msg.url("#"), decision)
+end
+
+local function execute_skill(self, decision)
+	local cards_data = get_cards_data(self)
+	self.skill:execute(cards_data, self.card_player, self.opponent, msg.url("#"), decision)
 end
 
 local function shake(self)
@@ -84,7 +97,7 @@ function on_message(self, message_id, message, sender)
 						shake(self)
 					end
 				end
-			else
+			elseif not self.used then
 				if can_play_card(self, card, card_slot_index) then
 					msg.post(message.other_id, "left_skill_card_slot", { skill_id = msg.url("."), card_slot_index = card_slot_index })
 					msg.post("skill-outline", "clear")
@@ -95,6 +108,13 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("drop_card_on_slot") then
 		local card_id = message.card_id
 		local card_slot_index = message.card_slot_index
+
+		-- disable card collisions
+		msg.post(msg.url(nil, card_id.path, "collisionobject"), "disable")
+		msg.post(msg.url(nil, card_id.path, "cards-collision"), "disable")
+
+		-- disable card slot collisions
+		msg.post("#collisionobject-" .. tostring(card_slot_index), "disable")
 
 		local skill_position = go.get_position()
 		local card_position = go.get_position(card_id)
@@ -119,6 +139,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("card_dropped_on_slot") then
 		local card_id = message.card_id
 		local card_slot_index = message.card_slot_index
+		
 		if not self.card_id_per_slot[card_slot_index] then
 			self.card_id_per_slot[card_slot_index] = card_id
 			local num_played_slots = 0
@@ -129,20 +150,24 @@ function on_message(self, message_id, message, sender)
 			end
 			assert(num_played_slots <= #self.skill.requirements)
 			if num_played_slots == #self.skill.requirements then
-				msg.post(".", "execute_skill", { card_id = card_id })
+				msg.post(".", "execute_skill")
 			end
 		end
 	elseif message_id == hash("execute_skill") then
 		if self.used then
 			return
 		end
+		assert(#self.skill.requirements == #self.card_id_per_slot)
 		self.used = true
-		local card_id = message.card_id
-		msg.post(msg.url(nil, card_id.path, "collisionobject"), "disable")
-		msg.post(msg.url(nil, card_id.path, "cards-collision"), "disable")
 		
 		local decision = {}
-		local target_character = prepare_skill(self, card_id, decision)
+		local target_character, discard_used_cards = prepare_skill(self, decision)
+
+		if not discard_used_cards then
+			for i = 1, #self.card_id_per_slot do
+				go.set_parent(self.card_id_per_slot[i], nil, true)
+			end
+		end
 		
 		local y
 		if go.get(msg.url(nil, target_character.path, "character"), "is_player") then
@@ -151,8 +176,12 @@ function on_message(self, message_id, message, sender)
 			y = self.initial_y + 1600
 		end
 		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, y, go.EASING_INBACK, 0.4, 0, function()
-			execute_skill(self, card_id, decision)
-			msg.post(self.card_player, "remove_card", { card_id = card_id })
+			execute_skill(self, decision)
+			if discard_used_cards then
+				for i = 1, #self.card_id_per_slot do
+					msg.post(self.card_player, "remove_card", { card_id = self.card_id_per_slot[i] })
+				end
+			end
 
 			if not go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
 				timer.delay(1, false, function()
@@ -166,6 +195,11 @@ function on_message(self, message_id, message, sender)
 		end
 		self.used = false
 		self.card_id_per_slot = {}
-		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, self.initial_y, go.EASING_INBACK, 0.4)
+		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, self.initial_y, go.EASING_INBACK, 0.4, 0, function()
+			-- enable slot collisions
+			for i = 1, #self.skill.requirements do
+				msg.post("#collisionobject-" .. tostring(i), "enable")
+			end
+		end)
 	end
 end

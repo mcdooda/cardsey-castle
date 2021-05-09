@@ -91,6 +91,12 @@ cards.diamonds = diamonds
 cards.clover = clover
 cards.pikes = pikes
 
+cards.jack = jack
+cards.queen = queen
+cards.king = king
+
+cards.joker = joker
+
 cards.get_card_string = get_card_string
 cards.get_card_hash = get_card_hash
 

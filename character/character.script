@@ -1,6 +1,7 @@
 local characters = require("character.characters")
 local ai = require("character.ai")
 local skills = require("skill.skills")
+local cards = require("card.cards")
 
 go.property("name", hash("Player"))
 go.property("is_player", true)
@@ -123,7 +124,7 @@ local function start_turn(self)
 	local skill_number = 1
 	for i = 1, #self.character.skills do
 		local skill_name = self.character.skills[i]
-		local skill = skills[skill_name]
+		local skill = assert(skills[skill_name], "Cannot find skill " .. tostring(skill_name))
 		local skill_position_url
 		if #skill.requirements > 1 then
 			skill_position_url = "/skill-pair-position-" .. tostring(math.floor((skill_number + 1) / 2))
@@ -189,12 +190,27 @@ local function set_health_points(self, health_points, animate)
 	msg.post("/main-gui", "set_health", { is_player = self.is_player, animate = animate, initial_value = self.health_points, value = health_points, max_value = self.max_health_points })
 end
 
-local function discard_faceup_card(self)
+local function discard_faceup_card(self, values)
 	local faceup_cards = {}
 	for i = 1, #self.cards do
 		local card_url = self.cards[i]
 		if go.get(msg.url(nil, card_url.path, "card"), "showing_front") then
-			faceup_cards[#faceup_cards + 1] = card_url
+			if not values then
+				faceup_cards[#faceup_cards + 1] = card_url
+			else
+				local found_value = false
+				local card_name = go.get(msg.url(nil, card_url.path, "card"), "card_name")
+				for j = 1, #values do
+					local card_value = cards.get_value(card_name)
+					if values[j] == cards.get_value(card_name) then
+						found_value = true
+						break
+					end
+				end
+				if found_value then
+					faceup_cards[#faceup_cards + 1] = card_url
+				end
+			end
 		end
 	end
 	if #faceup_cards > 0 then
@@ -284,7 +300,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("set_health_points") then
 		set_health_points(self, message.health_points, true)
 	elseif message_id == hash("discard_faceup_card") then
-		discard_faceup_card(self)
+		discard_faceup_card(self, message.values)
 	-- cards in hand
 	elseif message_id == hash("add_card") then
 		add_card(self, message.card_id)
@@ -300,6 +316,8 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("discard_stack_cards_of_suits") then
 		msg.post("deck", message_id, message)
 	elseif message_id == hash("discard_stack_cards_of_lesser_value") then
+		msg.post("deck", message_id, message)
+	elseif message_id == hash("shuffle_into_deck") then
 		msg.post("deck", message_id, message)
 	end
 end

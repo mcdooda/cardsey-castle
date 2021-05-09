@@ -13,11 +13,11 @@ function skill:can_play_card(card_name)
 	return false
 end
 
-function skill:prepare(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
+function skill:prepare(cards_data, card_player_url, opponent_url, skill_id, decision)
 	error("Cannot prepare this skill")
 end
 
-function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
+function skill:execute(cards_data, card_player_url, opponent_url, skill_id, decision)
 	error("Cannot execute this skill")
 end
 

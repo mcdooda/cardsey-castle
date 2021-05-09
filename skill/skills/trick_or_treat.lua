@@ -14,15 +14,16 @@ function skill:can_play_card(card_name)
 	return not card_name
 end
 
-function skill:prepare(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
+function skill:prepare(cards_data, card_player_url, opponent_url, skill_id, decision)
 	if cards.is_red(card_name) then
-		return card_player_url
+		return card_player_url, true
 	else
-		return opponent_url
+		return opponent_url, true
 	end
 end
 
-function skill:execute(card_name, showing_front, card_player_url, opponent_url, skill_id, decision)
+function skill:execute(cards_data, card_player_url, opponent_url, skill_id, decision)
+	local card_name = cards_data[1].name
 	if cards.is_red(card_name) then
 		local heal_amount = 0
 		if cards.is_joker(card_name) then

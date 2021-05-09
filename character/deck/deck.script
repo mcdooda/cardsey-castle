@@ -1,6 +1,7 @@
 go.property("is_player_deck", true)
 
 local cards = require("card.cards")
+local card_animation = require("card.card_animation")
 
 function init(self)
 	self.stack = cards.init_stack()
@@ -55,6 +56,11 @@ local function discard_cards_from_stack(self, predicate)
 	end
 end
 
+local function shuffle_card_into_stack(self, card_name)
+	local random_index = math.random(1, #self.stack + 1)
+	table.insert(self.stack, random_index, card_name)
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("draw") then
 		if #self.stack == 0 then
@@ -94,5 +100,21 @@ function on_message(self, message_id, message, sender)
 		discard_cards_from_stack(self, function(card_name)
 			return cards.is_number(card_name) and cards.get_value(card_name) < max_value
 		end)
+	elseif message_id == hash("shuffle_into_deck") then
+		local card_ids = message.card_ids
+		for i = 1, #card_ids do
+			local card_id = card_ids[i]
+			card_animation.show_back(card_id, function()
+				local position = go.get_position()
+				position.z = position.z - 0.1
+				go.animate(card_id, "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_INOUTCUBIC, 0.4, (i - 1) * 0.2, function()
+					local card_script_url = msg.url(nil, card_id.path, "card")
+					local character_id = go.get(card_script_url, "character")
+					msg.post(character_id, "remove_card", { card_id = card_id })
+					local card_name = go.get(card_script_url, "card_name")
+					shuffle_card_into_stack(self, card_name)
+				end)
+			end)
+		end
 	end
 end

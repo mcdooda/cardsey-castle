@@ -22,5 +22,8 @@ add_skill("value_of_nothing",      require("skill.skills.value_of_nothing"))
 add_skill("a_dime_a_dozen",        require("skill.skills.a_dime_a_dozen"))
 add_skill("it_takes_two_to_tango", require("skill.skills.it_takes_two_to_tango"))
 add_skill("three_strikes",         require("skill.skills.three_strikes"))
+add_skill("anti_conformism",       require("skill.skills.anti_conformism"))
+add_skill("labour_of_love",        require("skill.skills.labour_of_love"))
+add_skill("cook_the_books",        require("skill.skills.cook_the_books"))
 
 return skills
