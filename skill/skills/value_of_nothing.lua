@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Value of nothing"
 skill.description = "Discard lower value cards from your deck"
-skill.requirements = {"Numbers only"}
+skill.requirements = {"Number"}
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)

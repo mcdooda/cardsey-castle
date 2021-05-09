@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "It takes two to tango"
 skill.description = "Deal 50 damage"
-skill.requirements = {"Queens only", "Kings only"}
+skill.requirements = {"Queen", "King"}
 skill.color = skill_colors.damage
 
 function skill:can_play_card(card_name, card_slot_index)

@@ -153,7 +153,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "line_break: true\n"
   "text: \"\"\n"
-  "font: \"/builtins/fonts/system_font.font\"\n"
+  "font: \"/skill/skill_font.font\"\n"
   "material: \"/builtins/fonts/label.material\"\n"
   ""
   position {

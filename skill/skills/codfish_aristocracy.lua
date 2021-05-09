@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Codfish aristocracy"
 skill.description = "Draw 3 cards\n(no hand limit)"
-skill.requirements = {"Faces only"}
+skill.requirements = {"Face"}
 skill.color = skill_colors.heal
 
 function skill:can_play_card(card_name)

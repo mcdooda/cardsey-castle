@@ -1,7 +1,7 @@
 script: ""
 fonts {
   name: "skill_font"
-  font: "/builtins/fonts/system_font.font"
+  font: "/skill/skill_font.font"
 }
 background_color {
   x: 0.0
@@ -30,14 +30,14 @@ nodes {
   }
   size {
     x: 200.0
-    y: 20.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 1.0
-    y: 0.0
-    z: 0.0
+    x: 0.90588236
+    y: 0.29803923
+    z: 0.23529412
     w: 1.0
   }
   type: TYPE_BOX
@@ -83,15 +83,15 @@ nodes {
     w: 1.0
   }
   size {
-    x: 50.0
-    y: 20.0
+    x: 100.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 1.0
-    z: 0.0
+    x: 0.15294118
+    y: 0.68235296
+    z: 0.3764706
     w: 1.0
   }
   type: TYPE_BOX
@@ -138,14 +138,14 @@ nodes {
   }
   size {
     x: 200.0
-    y: 20.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 0.0
-    z: 1.0
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
     w: 1.0
   }
   type: TYPE_TEXT

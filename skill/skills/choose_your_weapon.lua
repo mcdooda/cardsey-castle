@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Choose your weapon"
 skill.description = "Deal [X] damage"
-skill.requirements = {"Numbers only"}
+skill.requirements = {"Number"}
 skill.color = skill_colors.damage
 
 function skill:can_play_card(card_name)

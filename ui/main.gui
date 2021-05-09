@@ -1,7 +1,11 @@
 script: "/ui/main.gui_script"
 fonts {
   name: "skill_font"
-  font: "/builtins/fonts/system_font.font"
+  font: "/skill/skill_font.font"
+}
+fonts {
+  name: "character_name_font"
+  font: "/character/character_name_font.font"
 }
 textures {
   name: "characters-atlas"
@@ -16,7 +20,7 @@ background_color {
 nodes {
   position {
     x: 9.0
-    y: 19.0
+    y: 22.0
     z: 0.0
     w: 1.0
   }
@@ -73,14 +77,14 @@ nodes {
   }
   size {
     x: 200.0
-    y: 20.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 1.0
-    y: 0.0
-    z: 0.0
+    x: 0.90588236
+    y: 0.29803923
+    z: 0.23529412
     w: 1.0
   }
   type: TYPE_BOX
@@ -127,15 +131,15 @@ nodes {
     w: 1.0
   }
   size {
-    x: 50.0
-    y: 20.0
+    x: 100.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 1.0
-    z: 0.0
+    x: 0.15294118
+    y: 0.68235296
+    z: 0.3764706
     w: 1.0
   }
   type: TYPE_BOX
@@ -183,14 +187,14 @@ nodes {
   }
   size {
     x: 200.0
-    y: 20.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 0.0
-    z: 1.0
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
     w: 1.0
   }
   type: TYPE_TEXT
@@ -228,7 +232,7 @@ nodes {
 nodes {
   position {
     x: 9.0
-    y: 1117.0
+    y: 1114.0
     z: 0.0
     w: 1.0
   }
@@ -285,14 +289,14 @@ nodes {
   }
   size {
     x: 200.0
-    y: 20.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 1.0
-    y: 0.0
-    z: 0.0
+    x: 0.90588236
+    y: 0.29803923
+    z: 0.23529412
     w: 1.0
   }
   type: TYPE_BOX
@@ -339,15 +343,15 @@ nodes {
     w: 1.0
   }
   size {
-    x: 50.0
-    y: 20.0
+    x: 100.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 1.0
-    z: 0.0
+    x: 0.15294118
+    y: 0.68235296
+    z: 0.3764706
     w: 1.0
   }
   type: TYPE_BOX
@@ -395,14 +399,14 @@ nodes {
   }
   size {
     x: 200.0
-    y: 20.0
+    y: 26.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 0.0
-    z: 1.0
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
     w: 1.0
   }
   type: TYPE_TEXT
@@ -494,7 +498,7 @@ nodes {
 nodes {
   position {
     x: 109.0
-    y: 1097.0
+    y: 1086.0
     z: 0.0
     w: 1.0
   }
@@ -512,28 +516,28 @@ nodes {
   }
   size {
     x: 200.0
-    y: 100.0
+    y: 30.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "King of Pikes"
-  font: "skill_font"
-  id: "opponent-name"
+  font: "character_name_font"
+  id: "enemy-name"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.5019608
+    y: 0.5019608
+    z: 0.5019608
     w: 1.0
   }
   shadow {
@@ -555,8 +559,8 @@ nodes {
 }
 nodes {
   position {
-    x: 218.0
-    y: 19.0
+    x: 502.0
+    y: 28.0
     z: 0.0
     w: 1.0
   }
@@ -573,15 +577,15 @@ nodes {
     w: 1.0
   }
   size {
-    x: 100.0
-    y: 20.0
+    x: 130.0
+    y: 40.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.2
-    y: 0.4
-    z: 0.2
+    x: 0.9529412
+    y: 0.6117647
+    z: 0.07058824
     w: 1.0
   }
   type: TYPE_BOX
@@ -609,7 +613,7 @@ nodes {
 }
 nodes {
   position {
-    x: 50.0
+    x: 65.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -627,15 +631,70 @@ nodes {
     w: 1.0
   }
   size {
-    x: 100.0
-    y: 20.0
+    x: 126.0
+    y: 36.0
     z: 0.0
     w: 1.0
   }
   color {
+    x: 0.94509804
+    y: 0.76862746
+    z: 0.05882353
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: ""
+  id: "box1"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "end-turn-button"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
     x: 1.0
     y: 1.0
     z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 130.0
+    y: 40.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
     w: 1.0
   }
   type: TYPE_TEXT
@@ -660,7 +719,69 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "end-turn-button"
+  parent: "box1"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: false
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 109.0
+    y: 50.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 30.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 0.17254902
+    y: 0.24313726
+    z: 0.3137255
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Player"
+  font: "character_name_font"
+  id: "player-name"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 0.5019608
+    y: 0.5019608
+    z: 0.5019608
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
   layer: ""
   inherit_alpha: true
   alpha: 1.0

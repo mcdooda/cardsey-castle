@@ -6,7 +6,7 @@ local skill = {}
 
 skill.name = "Half measures"
 skill.description = "Divide health by 2"
-skill.requirements = {"Aces only"}
+skill.requirements = {"Ace"}
 skill.color = skill_colors.damage
 
 function skill:can_play_card(card_name)

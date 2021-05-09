@@ -112,7 +112,7 @@ collection_instances {
   collection: "/character/character-collection.collection"
   position {
     x: -15.0
-    y: 991.0
+    y: 968.0
     z: 0.1
   }
   rotation {
