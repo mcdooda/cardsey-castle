@@ -317,6 +317,8 @@ function on_message(self, message_id, message, sender)
 		msg.post("deck", message_id, message)
 	elseif message_id == hash("discard_stack_cards_of_lesser_value") then
 		msg.post("deck", message_id, message)
+	elseif message_id == hash("discard_stack_cards_of_equal_value") then
+		msg.post("deck", message_id, message)
 	elseif message_id == hash("shuffle_into_deck") then
 		msg.post("deck", message_id, message)
 	end

@@ -100,6 +100,11 @@ function on_message(self, message_id, message, sender)
 		discard_cards_from_stack(self, function(card_name)
 			return cards.is_number(card_name) and cards.get_value(card_name) < max_value
 		end)
+	elseif message_id == hash("discard_stack_cards_of_equal_value") then
+		local value = message.value
+		discard_cards_from_stack(self, function(card_name)
+			return cards.get_value(card_name) == value
+		end)
 	elseif message_id == hash("shuffle_into_deck") then
 		local card_ids = message.card_ids
 		for i = 1, #card_ids do

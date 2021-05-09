@@ -42,6 +42,10 @@ local function discard_stack_cards_of_lesser_value(character_url, max_value)
 	post_skill(character_url, "discard_stack_cards_of_lesser_value", { max_value = max_value })
 end
 
+local function discard_stack_cards_of_equal_value(character_url, value)
+	post_skill(character_url, "discard_stack_cards_of_equal_value", { value = value })
+end
+
 local function shuffle_into_deck(character_url, card_ids)
 	post_skill(character_url, "shuffle_into_deck", { card_ids = card_ids })
 end
@@ -56,5 +60,6 @@ return {
 	discard_faceup_card                 = discard_faceup_card,
 	discard_stack_cards_of_suits        = discard_stack_cards_of_suits,
 	discard_stack_cards_of_lesser_value = discard_stack_cards_of_lesser_value,
+	discard_stack_cards_of_equal_value  = discard_stack_cards_of_equal_value,
 	shuffle_into_deck                   = shuffle_into_deck,
 }

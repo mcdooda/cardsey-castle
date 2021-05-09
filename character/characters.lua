@@ -14,10 +14,10 @@ end
 
 add_character("Player", 100, {
 	"it_takes_two_to_tango",
-	"labour_of_love",
 	"cook_the_books",
-	"choose_your_weapon",
-	"choose_your_weapon",
+	"cook_the_books",
+	"share_and_share_alike",
+	"labour_of_love",
 })
 
 add_character("Enemy", 200, {
