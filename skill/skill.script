@@ -119,10 +119,12 @@ function on_message(self, message_id, message, sender)
 		local skill_position = go.get_position()
 		local card_position = go.get_position(card_id)
 		local position = vmath.vector3()
-		position.x = skill_position.x + ((card_slot_index - 1) - (#self.skill.requirements - 1) * 0.5) * 160 * 0.9
+		position.x = skill_position.x + ((card_slot_index - 1) - (#self.skill.requirements - 1) * 0.5) * 160
 		position.y = skill_position.y
 		position.z = skill_position.z + 0.02
 		go.animate(card_id, "euler.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTQUINT, 0.3)
+		local scale = vmath.vector3(0.75, 0.75, 1)
+		go.animate(card_id, "scale", go.PLAYBACK_ONCE_FORWARD, scale, go.EASING_OUTQUINT, 0.3)
 		go.animate(card_id, "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_OUTQUINT, 0.3, 0, function()
 			local function set_parent_drop()
 				go.set_parent(card_id, ".", true)

@@ -40,8 +40,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 66.5\n"
-  "  data: 97.0\n"
+  "  data: 49.5\n"
+  "  data: 72.5\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -64,8 +64,8 @@ embedded_components {
   id: "description-label"
   type: "label"
   data: "size {\n"
-  "  x: 480.0\n"
-  "  y: 36.0\n"
+  "  x: 500.0\n"
+  "  y: 48.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -104,7 +104,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -116.0
+    y: -96.0
     z: 0.0
   }
   rotation {
@@ -118,8 +118,8 @@ embedded_components {
   id: "requirements-label-1"
   type: "label"
   data: "size {\n"
-  "  x: 120.0\n"
-  "  y: 182.0\n"
+  "  x: 99.0\n"
+  "  y: 145.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -172,7 +172,7 @@ embedded_components {
   id: "card-slot-sprite-1"
   type: "sprite"
   data: "tile_set: \"/assets/cards/card-atlas.atlas\"\n"
-  "default_animation: \"back\"\n"
+  "default_animation: \"back-75\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
@@ -192,8 +192,8 @@ embedded_components {
   id: "name-label"
   type: "label"
   data: "size {\n"
-  "  x: 480.0\n"
-  "  y: 32.0\n"
+  "  x: 500.0\n"
+  "  y: 46.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -234,7 +234,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: 115.0
+    y: 97.0
     z: 0.0
   }
   rotation {
@@ -248,7 +248,7 @@ embedded_components {
   id: "card-slot-sprite-2"
   type: "sprite"
   data: "tile_set: \"/assets/cards/card-atlas.atlas\"\n"
-  "default_animation: \"back\"\n"
+  "default_animation: \"back-75\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
@@ -268,8 +268,8 @@ embedded_components {
   id: "requirements-label-2"
   type: "label"
   data: "size {\n"
-  "  x: 120.0\n"
-  "  y: 182.0\n"
+  "  x: 99.0\n"
+  "  y: 145.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -345,8 +345,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 66.5\n"
-  "  data: 97.0\n"
+  "  data: 49.5\n"
+  "  data: 72.5\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -369,7 +369,7 @@ embedded_components {
   id: "card-slot-sprite-3"
   type: "sprite"
   data: "tile_set: \"/assets/cards/card-atlas.atlas\"\n"
-  "default_animation: \"back\"\n"
+  "default_animation: \"back-75\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
@@ -389,8 +389,8 @@ embedded_components {
   id: "requirements-label-3"
   type: "label"
   data: "size {\n"
-  "  x: 120.0\n"
-  "  y: 182.0\n"
+  "  x: 99.0\n"
+  "  y: 145.0\n"
   "  z: 0.0\n"
   "  w: 0.0\n"
   "}\n"
@@ -466,8 +466,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 66.5\n"
-  "  data: 97.0\n"
+  "  data: 49.5\n"
+  "  data: 72.5\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"

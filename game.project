@@ -70,3 +70,7 @@ max_count = 200
 default_texture_min_filter = linear
 default_texture_mag_filter = linear
 
+[html5]
+show_fullscreen_button = 0
+show_made_with_defold = 0
+

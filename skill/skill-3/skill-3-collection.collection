@@ -24,7 +24,7 @@ instances {
   prototype: "/assets/rectangle/rectangle.go"
   position {
     x: 0.0
-    y: 88.0
+    y: 81.0
     z: 0.15
   }
   rotation {
@@ -43,7 +43,7 @@ instances {
   }
   scale3 {
     x: 500.0
-    y: 32.0
+    y: 46.0
     z: 1.0
   }
 }
@@ -82,8 +82,8 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 0.9
-    y: 0.9
+    x: 1.0
+    y: 1.0
     z: 1.0
   }
 }
