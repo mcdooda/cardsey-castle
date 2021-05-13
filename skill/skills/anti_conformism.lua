@@ -5,7 +5,7 @@ local skill_colors = require("skill.skill_colors")
 local skill = {}
 
 skill.name = "Anti-conformism"
-skill.description = "Discard a face-up face card from the opponent's hand"
+skill.description = "Discard a face card from your opponent's hand"
 skill.requirements = {"Number"}
 skill.color = skill_colors.discard_opponent
 
