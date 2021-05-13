@@ -26,5 +26,6 @@ add_skill("anti_conformism",       require("skill.skills.anti_conformism"))
 add_skill("labour_of_love",        require("skill.skills.labour_of_love"))
 add_skill("cook_the_books",        require("skill.skills.cook_the_books"))
 add_skill("share_and_share_alike", require("skill.skills.share_and_share_alike"))
+add_skill("bad_blood",             require("skill.skills.bad_blood"))
 
 return skills

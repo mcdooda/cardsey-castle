@@ -5,7 +5,7 @@ local skill_colors = require("skill.skill_colors")
 local skill = {}
 
 skill.name = "Here goes nothing"
-skill.description = "Only throws the card away"
+skill.description = "Discard this card"
 skill.requirements = {""}
 skill.color = skill_colors.neutral
 
