@@ -19,15 +19,6 @@ function init(self)
 	self.card_name_string = cards.get_string(self.card_name)
 end
 
-function update(self, dt)
-	if go.get("main-script#main", "enable_card_skill_debug") then
-		for i = 1, #self.overlapping_card_slots do
-			local color_red = vmath.vector4(1, 0, 0, 1)
-			msg.post("@render:", "draw_line", { start_point = go.get_position(), end_point = go.get_position(self.overlapping_card_slots[i].skill_id), color = color_red })
-		end
-	end
-end
-
 local function dissolve(self)
 	local dissolve_duration = 1
 	go.animate("#sprite", "dissolve_progression.x", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_LINEAR, dissolve_duration, 0, function()

@@ -1,4 +1,4 @@
-script: "/ui/main.gui_script"
+script: "/game/game.gui_script"
 fonts {
   name: "skill_font"
   font: "/skill/skill_font.font"

@@ -187,7 +187,7 @@ end
 
 local function set_health_points(self, health_points, animate)
 	self.health_points = health_points
-	msg.post("/main-gui", "set_health", { is_player = self.is_player, animate = animate, initial_value = self.health_points, value = health_points, max_value = self.max_health_points })
+	msg.post("/game-gui", "set_health", { is_player = self.is_player, animate = animate, initial_value = self.health_points, value = health_points, max_value = self.max_health_points })
 end
 
 local function discard_faceup_card(self, values)
