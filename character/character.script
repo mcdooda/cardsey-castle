@@ -64,7 +64,7 @@ local function flip_random_card(cards)
 	end
 	if #facedown_cards > 0 then
 		local random_facedown_card_index = math.random(1, #facedown_cards)
-		msg.post(facedown_cards[random_facedown_card_index], "show_front")
+		msg.post(facedown_cards[random_facedown_card_index], "show_front", { notify_character = "card_flip_finished" })
 	end
 end
 
@@ -113,11 +113,6 @@ local function add_skill(self, skill_name, position)
 	return skill_url
 end
 
-local function remove_skill(self, skill_index)
-	local ids = self.skills[skill_index].ids
-	go.delete(ids)
-end
-
 local function start_turn(self)
 	assert(not self.is_current_turn)
 	self.is_current_turn = true
@@ -153,8 +148,12 @@ local function start_turn(self)
 	end
 	
 	msg.post("deck", "draw", { amount = draw_amount, show_front = true })
-	
-	if not self.is_player then
+
+	if self.is_player then
+		msg.post("/game-gui", "player_turn_started")
+	else
+		msg.post("/game-gui", "ai_turn_started")
+		self.has_ai_turn_started = false
 		timer.delay(3, false, function()
 			msg.post(".", "play_ai_turn")
 		end)
@@ -165,6 +164,8 @@ local function end_turn(self)
 	if not self.is_current_turn then
 		return
 	end
+
+	self.is_current_turn = false
 	for i = 1, #self.skills do
 		local skill = self.skills[i]
 		local skill_url = msg.url(nil, skill.skill_url.path, nil)
@@ -174,13 +175,14 @@ local function end_turn(self)
 		else
 			x = go.get_position(skill_url).x - 1600
 		end
+		local skill_ids = skill.ids
 		go.animate(skill_url, "position.x", go.PLAYBACK_ONCE_FORWARD, x, go.EASING_INBACK, 0.8, 0, function()
-			remove_skill(self, i, false)
+			go.delete(skill_ids)
 		end)
 	end
+	self.skills = {}
+	
 	timer.delay(1, false, function()
-		self.skills = {}
-		self.is_current_turn = false
 		msg.post(get_opponent_url(self), "start_turn")
 	end)
 end
@@ -233,6 +235,8 @@ function init(self)
 	self.is_current_turn = false
 	self.skills = {}
 	self.cards = {}
+
+	self.has_ai_turn_started = false
 end
 
 local function reload_used_skill(self, ignore_skill)
@@ -249,43 +253,46 @@ local function reload_used_skill(self, ignore_skill)
 	end
 end
 
-local function find_card_index(cards, card)
-	assert(cards)
-	assert(card)
-	for i = 1, #cards do
-		if cards[i] == card then
-			return i
-		end
-	end
-	assert(false, "could not find card " .. tostring(card))
-end
-
 function on_message(self, message_id, message, sender)
 	-- turns
 	if message_id == hash("start_turn") then
 		start_turn(self)
 	elseif message_id == hash("end_turn") then
 		end_turn(self)
+	elseif message_id == hash("action_finished") then
+		if self.is_player then
+			local best_move = ai.find_best_move(self)
+			if not best_move then
+				msg.post("/game-gui", "player_turn_finished")
+			end
+		else
+			if self.has_ai_turn_started then
+				timer.delay(1.5, false, function()
+					msg.post("#", "play_ai_turn")
+				end)
+			end
+		end		
+	elseif message_id == hash("skill_execution_finished") then
+		msg.post("#", "action_finished")
+	elseif message_id == hash("draw_finished") then
+		msg.post("#", "action_finished")
+	elseif message_id == hash("card_flip_finished") then
+		msg.post("#", "action_finished")
 	-- ai
 	elseif message_id == hash("play_ai_turn") then
 		if not self.is_player then
+			self.has_ai_turn_started = true
 			local best_move = ai.find_best_move(self)
 			if best_move then
 				if best_move == ai.draw then
 					msg.post("deck", "draw", { amount = 1 })
-					timer.delay(1, false, function()
-						msg.post(".", "play_ai_turn")
-					end)
 				elseif best_move == ai.flip_random_card then
-					msg.post(".", "flip_random_card")
-					timer.delay(1, false, function()
-						msg.post(".", "play_ai_turn")
-					end)
+					msg.post("#", "flip_random_card")
 				else
 					ai.play_skill(best_move.skill_id, best_move.card_id, best_move.card_slot_index)
 				end
 			else
-				msg.post(".", "end_turn")
+				msg.post("#", "end_turn")
 			end
 		end
 	-- skills

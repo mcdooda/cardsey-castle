@@ -19,8 +19,8 @@ function on_input(self, action_id, action)
 	if action_id == hash("toggle_physics_debug") and action.pressed then
 		msg.post("@system:", "toggle_physics_debug")
 	elseif action_id == hash("draw") and action.pressed then
-		msg.post("/player/character", "draw", { amount = 1, show_front = true })
+		msg.post("game:/player/character", "draw", { amount = 1, show_front = true })
 	elseif action_id == hash("print_deck") and action.pressed then
-		msg.post("/player/deck", "print_deck")
+		msg.post("game:/player/deck", "print_deck")
 	end
 end

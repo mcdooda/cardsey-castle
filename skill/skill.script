@@ -184,12 +184,7 @@ function on_message(self, message_id, message, sender)
 					msg.post(self.card_player, "remove_card", { card_id = self.card_id_per_slot[i] })
 				end
 			end
-
-			if not go.get(msg.url(nil, self.card_player.path, "character"), "is_player") then
-				timer.delay(1, false, function()
-					msg.post(self.card_player, "play_ai_turn")
-				end)
-			end
+			msg.post(self.card_player, "skill_execution_finished")
 		end)
 	elseif message_id == hash("reload_skill") then
 		if not self.used then

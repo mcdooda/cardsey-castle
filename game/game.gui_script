@@ -1,5 +1,7 @@
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	
+	self.default_end_turn_button_color = gui.get_color(gui.get_node("end-turn-button-inner"))
 end
 
 local function get_character_node(is_player, path)
@@ -47,15 +49,35 @@ local function set_health(self, is_player, initial_value, value, max_value, anim
 	end
 end
 
+local function highlight_end_turn_button(self)
+	local end_turn_button_highlight_color = vmath.vector4(0.18, 0.8, 0.44, 1)
+	gui.set_color(gui.get_node("end-turn-button-inner"), end_turn_button_highlight_color)
+end
+
+local function disable_end_turn_button(self)
+	local end_turn_button_highlight_color = vmath.vector4(0.58, 0.65, 0.65, 1)
+	gui.set_color(gui.get_node("end-turn-button-inner"), end_turn_button_highlight_color)
+end
+
+local function reset_end_turn_button(self)
+	gui.set_color(gui.get_node("end-turn-button-inner"), self.default_end_turn_button_color)
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("set_health") then
 		set_health(self, message.is_player, message.initial_value, message.value, message.max_value, message.animate)
+	elseif message_id == hash("player_turn_started") then
+		reset_end_turn_button(self)
+	elseif message_id == hash("player_turn_finished") then
+		highlight_end_turn_button(self)
+	elseif message_id == hash("ai_turn_started") then
+		disable_end_turn_button(self)
 	end
 end
 
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
-		if gui.pick_node(gui.get_node("end-turn-button"), action.x, action.y) then
+		if gui.pick_node(gui.get_node("end-turn-button-outer"), action.x, action.y) then
 			msg.post("player/character", "end_turn")
 		end
 	end

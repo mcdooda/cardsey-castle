@@ -701,7 +701,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
-  id: "end-turn-button"
+  id: "end-turn-button-outer"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
@@ -755,12 +755,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
-  id: "box1"
+  id: "end-turn-button-inner"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "end-turn-button"
+  parent: "end-turn-button-outer"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -811,7 +811,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "End Turn"
   font: "skill_font"
-  id: "text"
+  id: "end-turn-button-label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -829,7 +829,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "box1"
+  parent: "end-turn-button-inner"
   layer: ""
   inherit_alpha: true
   alpha: 1.0

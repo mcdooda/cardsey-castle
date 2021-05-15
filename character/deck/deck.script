@@ -90,7 +90,9 @@ function on_message(self, message_id, message, sender)
 				msg.post(msg.url(nil, card, "collisionobject"), "enable")
 				msg.post(msg.url(nil, card, "cards-collision"), "enable")
 				if show_front then
-					msg.post(msg.url(nil, card, nil), "show_front")
+					msg.post(msg.url(nil, card, nil), "show_front", { notify_character = "draw_finished" })
+				else
+					msg.post(sender, "draw_finished")
 				end
 			end)
 		end
