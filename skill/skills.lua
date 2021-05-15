@@ -27,5 +27,6 @@ add_skill("labour_of_love",        require("skill.skills.labour_of_love"))
 add_skill("cook_the_books",        require("skill.skills.cook_the_books"))
 add_skill("share_and_share_alike", require("skill.skills.share_and_share_alike"))
 add_skill("bad_blood",             require("skill.skills.bad_blood"))
+add_skill("doctor_up",             require("skill.skills.doctor_up"))
 
 return skills

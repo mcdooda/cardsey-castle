@@ -1,0 +1,13 @@
+function init(self)
+	msg.post("/player/character", "start_turn")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("game_finished") then
+		if message.won then
+			print("You win!")
+		else
+			print("You lose!")
+		end
+	end
+end

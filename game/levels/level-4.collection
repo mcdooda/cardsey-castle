@@ -1,0 +1,100 @@
+name: "level-1"
+collection_instances {
+  id: "game"
+  collection: "/game/game.collection"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "enemy"
+  collection: "/character/character-collection.collection"
+  position {
+    x: -15.0
+    y: 968.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "character"
+    properties {
+      id: "character"
+      properties {
+        id: "name"
+        value: "Enemy-4"
+        type: PROPERTY_TYPE_HASH
+      }
+      properties {
+        id: "is_player"
+        value: "false"
+        type: PROPERTY_TYPE_BOOLEAN
+      }
+    }
+  }
+  instance_properties {
+    id: "deck"
+    properties {
+      id: "deck"
+      properties {
+        id: "is_player_deck"
+        value: "false"
+        type: PROPERTY_TYPE_BOOLEAN
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "player"
+  collection: "/character/character-collection.collection"
+  position {
+    x: 655.0
+    y: 365.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  instance_properties {
+    id: "character"
+    properties {
+      id: "character"
+      properties {
+        id: "name"
+        value: "Player-4"
+        type: PROPERTY_TYPE_HASH
+      }
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+scale_along_z: 0

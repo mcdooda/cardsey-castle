@@ -6,12 +6,18 @@ function init(self)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("start_game") then
+	if message_id == hash("select_level") then
 		msg.post("menu", "disable")
-		msg.post("#game-collectionproxy", "load")
+		msg.post("#level-selection-menu-collectionproxy", "load")
+	elseif message_id == hash("start_game") then
+		msg.post("#level-selection-menu-collectionproxy", "disable")
+		msg.post("#level-selection-menu-collectionproxy", "final")
+		msg.post("#level-selection-menu-collectionproxy", "unload")
+		
+		msg.post("#level-" .. tostring(message.level) .. "-collectionproxy", "load")
 	elseif message_id == hash("proxy_loaded") then
+		msg.post(sender, "init")
 		msg.post(sender, "enable")
-		msg.post("game:/player/character", "start_turn")
 	end
 end
 

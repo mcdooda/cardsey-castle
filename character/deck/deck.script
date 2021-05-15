@@ -42,8 +42,8 @@ local function discard_cards_from_stack(self, predicate)
 		end
 	end
 
-	local discard_position_left = go.get_position("/discard-position-left")
-	local discard_position_right = go.get_position("/discard-position-right")
+	local discard_position_left = go.get_position("/game/discard-position-left")
+	local discard_position_right = go.get_position("/game/discard-position-right")
 
 	for i = 1, #cards_to_discard do
 		local card_name = cards_to_discard[i]

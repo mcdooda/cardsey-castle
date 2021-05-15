@@ -1,0 +1,3 @@
+function init(self)
+	pprint("My url is", msg.url())
+end

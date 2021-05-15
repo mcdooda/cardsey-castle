@@ -70,15 +70,14 @@ function on_message(self, message_id, message, sender)
 		reset_end_turn_button(self)
 	elseif message_id == hash("player_turn_finished") then
 		highlight_end_turn_button(self)
-	elseif message_id == hash("ai_turn_started") then
-		disable_end_turn_button(self)
 	end
 end
 
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(gui.get_node("end-turn-button-outer"), action.x, action.y) then
-			msg.post("player/character", "end_turn")
+			disable_end_turn_button(self)
+			msg.post("/player/character", "end_turn")
 		end
 	end
 end
