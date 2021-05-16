@@ -8,8 +8,6 @@ function on_message(self, message_id, message, sender)
 		local color = gui.get_color(gui.get_node("ok-button-outer"))
 		color.w = 0
 		gui.set_color(gui.get_node("ok-button-outer"), color)
-		gui.move_above(gui.get_node("background"), nil)
-		gui.move_above(gui.get_node("lose-label"), nil)
 		gui.animate(gui.get_node("background"), "color.w", 0, gui.EASING_INOUTQUAD, 1, 0, nil, gui.PLAYBACK_ONCE_BACKWARD)
 		gui.animate(gui.get_node("lose-label"), "position.y", 2000, gui.EASING_INBOUNCE, 1.5, 0, function()
 			gui.animate(gui.get_node("ok-button-outer"), "color.w", 1, go.EASING_INOUTQUINT, 2)
