@@ -1,4 +1,5 @@
 function init(self)
+	gui.set_render_order(0)
 	msg.post(".", "acquire_input_focus")
 	
 	self.default_end_turn_button_color = gui.get_color(gui.get_node("end-turn-button-inner"))

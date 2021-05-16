@@ -6,6 +6,8 @@ end
 
 -- debug skills
 add_skill("unplayable", require("skill.skills.unplayable"))
+add_skill("win",        require("skill.skills.win"))
+add_skill("lose",       require("skill.skills.lose"))
 
 -- actually useful skills
 add_skill("balance_is_the_key",    require("skill.skills.balance_is_the_key"))

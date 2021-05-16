@@ -3,6 +3,8 @@ function init(self)
 	
 	msg.post(".", "acquire_input_focus")
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
+
+	self.current_level = nil
 end
 
 function on_message(self, message_id, message, sender)
@@ -13,8 +15,16 @@ function on_message(self, message_id, message, sender)
 		msg.post("#level-selection-menu-collectionproxy", "disable")
 		msg.post("#level-selection-menu-collectionproxy", "final")
 		msg.post("#level-selection-menu-collectionproxy", "unload")
-		
-		msg.post("#level-" .. tostring(message.level) .. "-collectionproxy", "load")
+
+		self.current_level = message.level
+		msg.post("#level-" .. tostring(self.current_level) .. "-collectionproxy", "load")
+	elseif message_id == hash("game_ended") then
+		msg.post("#level-" .. tostring(self.current_level) .. "-collectionproxy", "disable")
+		msg.post("#level-" .. tostring(self.current_level) .. "-collectionproxy", "final")
+		msg.post("#level-" .. tostring(self.current_level) .. "-collectionproxy", "unload")
+		self.current_level = nil
+
+		msg.post(".", "select_level")
 	elseif message_id == hash("proxy_loaded") then
 		msg.post(sender, "init")
 		msg.post(sender, "enable")

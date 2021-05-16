@@ -4,10 +4,12 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("game_finished") then
+		msg.post("/game/cursor", "release_input_focus")
+		msg.post("/game/game-gui", "release_input_focus")
 		if message.won then
-			print("You win!")
+			msg.post("/game/win_menu", "enable")
 		else
-			print("You lose!")
+			msg.post("/game/lose_menu", "enable")
 		end
 	end
 end

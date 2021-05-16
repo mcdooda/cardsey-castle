@@ -70,8 +70,8 @@ add_character("Enemy-3", 100, {
 
 -- level 4
 add_character("Player-4", 100, {
-	"choose_your_weapon",
-	"choose_your_weapon",
+	"win",
+	"lose",
 	"choose_your_weapon",
 	"choose_your_weapon",
 	"choose_your_weapon",
